@@ -1,4 +1,5 @@
 function love.conf(t)
-  t.modules.joystick =  false
-  t.console = true
+    
+    t.modules.joystick =  false
+    t.console = true
 end
