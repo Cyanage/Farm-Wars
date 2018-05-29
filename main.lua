@@ -1,6 +1,6 @@
 -- Global and Constant variables.
     g_map_list = {}  -- List of all tiles on the map.
-    g_map_drawn = false  -- This if the map is being constantly redrawn.
+
     MAX_TILES = {x=16, y=9}  -- The prefered amount of tiles to be drawn.
 
 function love.load()
@@ -15,13 +15,16 @@ function love.load()
     -- Other Modules and classes are loaded here.
     --TODO: insert modules.
 
+    -- Init screen dimension variables.
+    screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
+
+    tile_size = math.floor((screen_width/MAX_TILES.x)+0.5)
+
+    scale_factor = tile_size/64
+
     -- Any initialization code goes after here.
     math.randomseed(os.time())  -- Set the randomizer seed.
     initMap()  -- Initialize the tilemap.
-
-    -- Init screen dimension variables.
-    screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
-    tiles_width, tiles_height = screen_width / 64, screen_height / 64
 
     -- Load Images.
     fence_top = love.graphics.newImage("resc/images/Fence_Top.png")
@@ -56,19 +59,6 @@ function initMap()
     end
 end
 
---just so that I can regenearte the map
-function love.update(dt)
-    if love.keyboard.isDown("r") then
-        --removes all tiles
-        for i, v in ipairs(g_map_list) do
-            table.remove(g_map_list, i)
-        end
-
-        --redraws the map
-        map_drawn = false
-    end
-end
-
 function drawMap()
     -- Loops through every column.
     for i, v in ipairs(g_map_list) do
@@ -78,12 +68,12 @@ function drawMap()
 
             --places apple tree on top of grass
             if g_map_list[i][j] == "grass" then
-                love.graphics.draw(grass, (i - 1) * 64, (j - 1) * 64, r, sx, sy, ox, oy, kx, ky)
+                love.graphics.draw(grass, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
             end
 
             if g_map_list[i][j] == "apple" then
-                love.graphics.draw(grass, (i - 1) * 64, (j - 1) * 64, r, sx, sy, ox, oy, kx, ky)
-                love.graphics.draw(apple_tree, (i - 1) * 64, (j - 1) * 64, r, sx, sy, ox, oy, kx, ky)
+                love.graphics.draw(grass, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
+                love.graphics.draw(apple_tree, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
             end
         end
     end
@@ -92,6 +82,6 @@ end
 function love.draw()
     --draws the map
     drawMap()
-    love.graphics.draw(fence_single, 0, 0, r, sx, sy, ox, oy, kx, ky)
+    love.graphics.draw(fence_single, 0, 0, r, scale_factor, scale_factor, ox, oy, kx, ky)
 
 end
