@@ -1,5 +1,5 @@
 function love.load()
-    print ("AHHHHHHHHHHHHHHHHHHHH!!!!!!")
+    print ("SHREKISM")
 
     --this is a library that simulates classes in lua
     Object = require "classic"
