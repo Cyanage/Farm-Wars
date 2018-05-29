@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-function love.load()
-    print ("SHREKISM")
-=======
 -- Global and Constant variables.
     g_map_list = {}  -- List of all tiles on the map.
     g_map_drawn = false  -- This if the map is being constantly redrawn.
     MAX_TILES = {x=16, y=9}  -- The prefered amount of tiles to be drawn.
->>>>>>> 5a509af21d50fa098704fde7d927215392c494f4
 
 function love.load()
     -- This is a library that simulates classes in lua (even though lua allready has classes, *cough cough*)
