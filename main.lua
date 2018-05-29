@@ -1,44 +1,67 @@
-function love.load()
-    print ("AHHHHHHHHHHHHHHHHHHHH!!!!!!")
+-- Global and Constant variables.
+    g_map_list = {}  -- List of all tiles on the map.
+    g_map_drawn = false  -- This if the map is being constantly redrawn.
+    MAX_TILES = {x=16, y=9}  -- The prefered amount of tiles to be drawn.
 
-    --this is a library that simulates classes in lua
+function love.load()
+    -- This is a library that simulates classes in lua (even though lua allready has classes, *cough cough*)
     Object = require "classic"
 
-    --everytime you generate a string of random numbers it'll be different
-    math.randomseed(os.time())
-
-    --setting up window and title
+    -- Set up the window.
     love.window.setTitle("Farm Wars")
     love.window.maximize()
-    love.graphics.setBackgroundColor(135, 206, 250, a)
+    love.graphics.setBackgroundColor(0, 0, 0, 1)
 
-    --this is so that the map is being constantly redrawn
-    map_drawn = false
+    -- Other Modules and classes are loaded here.
+    --TODO: insert modules.
 
-    --getting the screen dimensions and setting up how many tiles based on that
+    -- Any initialization code goes after here.
+    math.randomseed(os.time())  -- Set the randomizer seed.
+    initMap()  -- Initialize the tilemap.
+
+    -- Init screen dimension variables.
     screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
     tiles_width, tiles_height = screen_width / 64, screen_height / 64
 
-    --loading images
-    fence_top = love.graphics.newImage("Fence_Top.png")
-    fence_mid = love.graphics.newImage("Fence_Mid.png")
-    fence_bottom = love.graphics.newImage("Fence_Bottom.png")
-    fence_single = love.graphics.newImage("Fence_Single.png")
+    -- Load Images.
+    fence_top = love.graphics.newImage("resc/images/Fence_Top.png")
+    fence_mid = love.graphics.newImage("resc/images/Fence_Mid.png")
+    fence_bottom = love.graphics.newImage("resc/images/Fence_Bottom.png")
+    fence_single = love.graphics.newImage("resc/images/Fence_Single.png")
+    grass = love.graphics.newImage("resc/images/Grass.png")
+    apple_tree = love.graphics.newImage("resc/images/Apple_Tree.png")
+    wheat = love.graphics.newImage("resc/images/Wheat.png")
 
-    grass = love.graphics.newImage("Grass.png")
-    apple_tree = love.graphics.newImage("Apple_Tree.png")
-    wheat = love.graphics.newImage("Wheat.png")
+    -- Init modules
+    --TODO: insert modules.
+end
 
-    --list of all tiles on the map
-    map_list = {}
+function initMap()
+    -- Makes a multi dimensional array of [width][height]
+    for i = 0, MAX_TILES.x do  -- tiles_width
+        -- Places an array that will store a column of tiles
+        column = {}
+        for j = 0, MAX_TILES.y do  -- tiles_height
+
+            -- Randomly generates a number to decide if tile is grass or not.
+            random_number = love.math.random(1, 41)
+            if random_number <= 40 then
+                table.insert(column, "grass")
+            else
+                table.insert(column, "apple")
+            end
+
+        end
+        table.insert(g_map_list, column)
+    end
 end
 
 --just so that I can regenearte the map
 function love.update(dt)
     if love.keyboard.isDown("r") then
         --removes all tiles
-        for i, v in ipairs(map_list) do
-            table.remove(map_list, i)
+        for i, v in ipairs(g_map_list) do
+            table.remove(g_map_list, i)
         end
 
         --redraws the map
@@ -46,43 +69,19 @@ function love.update(dt)
     end
 end
 
-function DrawMap()
-
-    if map_drawn == false then
-        --makes a multi dimensional array of [width][height]
-        for i = 0, tiles_width do
-            --places and array that will store a column of tiles
-            table.insert(map_list, {})
-            for j = 0, tiles_height do
-
-                random_number = love.math.random(1, 41)
-                --randomly generates a number to decide if tile is grass or not
-                if random_number <= 40 then
-                    table.insert(map_list[i + 1], "grass")
-                else
-                    table.insert(map_list[i + 1], "apple")
-                end
-
-                --if the tiles reach the screen boundary, stop drawing the map
-                if i == math.floor(tiles_width + 0.5) - 1 and j == math.floor(tiles_height+0.5) - 1 then
-                    map_drawn = true
-                end
-            end
-        end
-    end
-
-    --goes through every column
-    for i, v in ipairs(map_list) do
-        for j, k in ipairs(map_list[i]) do
+function drawMap()
+    -- Loops through every column.
+    for i, v in ipairs(g_map_list) do
+        for j, k in ipairs(g_map_list[i]) do
 
             --draws the respective image on the screen
 
             --places apple tree on top of grass
-            if map_list[i][j] == "grass" then
+            if g_map_list[i][j] == "grass" then
                 love.graphics.draw(grass, (i - 1) * 64, (j - 1) * 64, r, sx, sy, ox, oy, kx, ky)
             end
 
-            if map_list[i][j] == "apple" then
+            if g_map_list[i][j] == "apple" then
                 love.graphics.draw(grass, (i - 1) * 64, (j - 1) * 64, r, sx, sy, ox, oy, kx, ky)
                 love.graphics.draw(apple_tree, (i - 1) * 64, (j - 1) * 64, r, sx, sy, ox, oy, kx, ky)
             end
@@ -92,7 +91,7 @@ end
 
 function love.draw()
     --draws the map
-    DrawMap()
+    drawMap()
     love.graphics.draw(fence_single, 0, 0, r, sx, sy, ox, oy, kx, ky)
 
 end
