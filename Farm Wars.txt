@@ -1,0 +1,39 @@
+todo
+
+- build sprites
+- do start screen - g
+- generates a tilemap with resources
+- have ai zone and player zone
+- have turns
+- have ai claim tiles
+- have player able to claim tiles
+- add in money
+- have ai prioritize stuff
+- can attack ai
+- ai can attack you
+- attacks affect money
+
+plan to have this stuff done by 15th of june, a couple days before 21st
+
+
+
+tilesize will be 16*4 x 16*4
+(64)
+
+
+images
+
+- plain grass
+- apple tree
+- fence
+- barn roof
+- barn roof edges
+- angry pitchfork guy
+- road
+- farmer
+- wheat
+- picked apple tree
+- broken fence
+
+
+You'll start in the main screen and there will be menu options to exit or play, when you click play, it gfenerates a map with resources and draws your barns. you then have 2, 2x2 tiles to place in your area, but only tiles that are touching tiles you already own. then the game starts. you make a certain amount of money per turn, which you can increase by developing resources in your land. you can use this money to buy more land, build fences, or buy angry farmers to attack your opponent. your goal is to destroy their resources and barn. someone loses when they have less than 0 money for 5 turns consecutively. Fences cost money and so do units, when an enemy destroys a tile it becomes damaged and loses you money per turn instead of just not making money. You click on a tile to choose what to do with it, ie repair, improve
