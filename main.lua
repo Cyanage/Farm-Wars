@@ -1,6 +1,5 @@
 -- Global and Constant variables.
     g_map_list = {}  -- List of all tiles on the map.
-
     MAX_TILES = {x=16, y=9}  -- The prefered amount of tiles to be drawn.
 
 function love.load()
@@ -14,17 +13,19 @@ function love.load()
 
     -- Other Modules and classes are loaded here.
     --TODO: insert modules.
+    menu = require "menu"
 
     -- Init screen dimension variables.
     screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
-
     tile_size = math.floor((screen_width/MAX_TILES.x)+0.5)
-
     scale_factor = tile_size/64
 
     -- Any initialization code goes after here.
     math.randomseed(os.time())  -- Set the randomizer seed.
+
     initMap()  -- Initialize the tilemap.
+
+    menu.load()
 
     -- Load Images.
     fence_top = love.graphics.newImage("resc/images/Fence_Top.png")
@@ -80,8 +81,21 @@ function drawMap()
 end
 
 function love.draw()
-    --draws the map
-    drawMap()
-    love.graphics.draw(fence_single, 0, 0, r, scale_factor, scale_factor, ox, oy, kx, ky)
+    -- Check what scene is active.
+    if menu.isActive() == true then
+        menu.draw()
+    else
+        -- Draws the map
+        drawMap()
+        love.graphics.draw(fence_single, 0, 0, r, scale_factor, scale_factor, ox, oy, kx, ky)
+    end
+end
 
+function love.update()
+    -- Check what scene is active.
+    if menu.isActive() == true then
+        menu.update()
+    else
+
+    end
 end
