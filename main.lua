@@ -19,8 +19,15 @@ function love.load()
     screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
 
     tile_size = math.floor((screen_width/MAX_TILES.x)+0.5)
+    print(tile_size)
 
     scale_factor = tile_size/64
+
+    if 64*scale_factor*MAX_TILES.y > screen_height then
+      tile_size = 64*scale_factor - 16
+      scale_factor = (tile_size) / 64
+      print (scale_factor)
+    end
 
     -- Any initialization code goes after here.
     math.randomseed(os.time())  -- Set the randomizer seed.
@@ -49,9 +56,9 @@ function initMap()
             -- Randomly generates a number to decide if tile is grass or not.
             random_number = love.math.random(1, 41)
             if random_number <= 40 then
-                table.insert(column, "grass")
+                table.insert(column, 0)
             else
-                table.insert(column, "apple")
+                table.insert(column, 1)
             end
 
         end
@@ -67,11 +74,11 @@ function drawMap()
             --draws the respective image on the screen
 
             --places apple tree on top of grass
-            if g_map_list[i][j] == "grass" then
+            if g_map_list[i][j] == 0 then
                 love.graphics.draw(grass, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
             end
 
-            if g_map_list[i][j] == "apple" then
+            if g_map_list[i][j] == 1 then
                 love.graphics.draw(grass, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
                 love.graphics.draw(apple_tree, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
             end
@@ -82,6 +89,7 @@ end
 function love.draw()
     --draws the map
     drawMap()
+    
     love.graphics.draw(fence_single, 0, 0, r, scale_factor, scale_factor, ox, oy, kx, ky)
 
 end
