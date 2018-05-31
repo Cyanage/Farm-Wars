@@ -11,27 +11,12 @@ function love.load()
     love.window.maximize()
     love.graphics.setBackgroundColor(0, 0, 0, 1)
 
-    -- Other Modules and classes are loaded here.
-    --TODO: insert modules.
+    -- Modules and classes are loaded here.
     menu = require "menu"
-
-    -- Init screen dimension variables.
-    screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
-    tile_size = math.floor((screen_width/MAX_TILES.x)+0.5)
-    scale_factor = tile_size/64
-
-    if 64*scale_factor*MAX_TILES.y > screen_height then
-      tile_size = 64*scale_factor - 16
-      scale_factor = (tile_size) / 64
-      print (scale_factor)
-    end
 
     -- Any initialization code goes after here.
     math.randomseed(os.time())  -- Set the randomizer seed.
-
-    initMap()  -- Initialize the tilemap.
-
-    menu.load()
+    initScreen()  -- Initialize the tilemap and screen size.
 
     -- Load Images.
     fence_top = love.graphics.newImage("resc/images/Fence_Top.png")
@@ -42,17 +27,36 @@ function love.load()
     apple_tree = love.graphics.newImage("resc/images/Apple_Tree.png")
     wheat = love.graphics.newImage("resc/images/Wheat.png")
 
+    --temp
+    bg_game = love.graphics.newImage("resc/images/mountains.png")
+    bg_scale = love.graphics.getWidth() / bg_game:getWidth()
+
     -- Init modules
-    --TODO: insert modules.
+    menu.load()
 end
 
-function initMap()
-    -- Makes a multi dimensional array of [width][height]
-    for i = 0, MAX_TILES.x do  -- tiles_width
-        -- Places an array that will store a column of tiles
-        column = {}
-        for j = 0, MAX_TILES.y do  -- tiles_height
+function initScreen()
+    -- Init screen dimension variables.
+    screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
+    tile_size = math.floor( (screen_width / MAX_TILES.x) + 0.5 )
+    scale_factor = tile_size / 64
 
+    while (MAX_TILES.y) * scale_factor * 64 > screen_height do
+        tile_size = (scale_factor * 64) - 16
+        scale_factor = tile_size / 64
+        print (scale_factor)
+    end
+
+    -- The top left corner of the tile map.
+    pos_centered = { x=(screen_width - ((MAX_TILES.x) * scale_factor * 64))/2, y=(screen_height - ((MAX_TILES.y) * scale_factor * 64))/2 }
+    print (pos_centered.x)
+
+    -- Makes a multi dimensional array of [width][height]
+    for i = 0, MAX_TILES.x-1 do  -- tiles_width
+        -- Creates an array that will store a column of tiles
+        column = {}
+
+        for j = 0, MAX_TILES.y-1 do  -- tiles_height
             -- Randomly generates a number to decide if tile is grass or not.
             random_number = love.math.random(1, 41)
             if random_number <= 40 then
@@ -60,27 +64,28 @@ function initMap()
             else
                 table.insert(column, 1)
             end
-
         end
+
         table.insert(g_map_list, column)
     end
 end
 
 function drawMap()
     -- Loops through every column.
-    for i, v in ipairs(g_map_list) do
-        for j, k in ipairs(g_map_list[i]) do
+    for i, p in ipairs(g_map_list) do
+        for j, p2 in ipairs(g_map_list[i]) do
 
-            --draws the respective image on the screen
+            tile_x = ( (i - 1) * tile_size ) + pos_centered.x
+            tile_y = ( (j - 1) * tile_size ) + pos_centered.y
 
-            --places apple tree on top of grass
+            -- Places apple tree on top of grass.
             if g_map_list[i][j] == 0 then
-                love.graphics.draw(grass, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
+                love.graphics.draw(grass, tile_x, tile_y, 0, scale_factor, scale_factor, ox, oy, kx, ky)
             end
 
             if g_map_list[i][j] == 1 then
-                love.graphics.draw(grass, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
-                love.graphics.draw(apple_tree, (i - 1) * tile_size, (j - 1) * tile_size, r, scale_factor, scale_factor, ox, oy, kx, ky)
+                love.graphics.draw(grass, tile_x, tile_y, 0, scale_factor, scale_factor, ox, oy, kx, ky)
+                love.graphics.draw(apple_tree, tile_x, tile_y, 0, scale_factor, scale_factor, ox, oy, kx, ky)
             end
         end
     end
@@ -91,9 +96,12 @@ function love.draw()
     if menu.isActive() == true then
         menu.draw()
     else
+        -- Draw the background.
+        love.graphics.draw(bg_game, 0, 0, r, bg_scale, bg_scale)
+
         -- Draws the map
         drawMap()
-        love.graphics.draw(fence_single, 0, 0, r, scale_factor, scale_factor, ox, oy, kx, ky)
+        love.graphics.draw(fence_single, 0, 0, 0, scale_factor, scale_factor, ox, oy, kx, ky)
     end
 end
 
