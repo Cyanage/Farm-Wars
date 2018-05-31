@@ -101,7 +101,7 @@ function love.draw()
 
         -- Draws the map
         drawMap()
-        love.graphics.draw(fence_single, 0, 0, 0, scale_factor, scale_factor, ox, oy, kx, ky)
+        love.graphics.draw(fence_single, 0 + pos_centered.x, 0 + pos_centered.y, 0, scale_factor, scale_factor, ox, oy, kx, ky)
     end
 end
 
