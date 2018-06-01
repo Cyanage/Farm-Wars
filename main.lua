@@ -1,5 +1,4 @@
 -- Global and Constant variables.
-    g_map_list = {}  -- List of all tiles on the map.
     MAX_TILES = {x=16, y=9}  -- The prefered amount of tiles to be drawn.
 
 function love.load()
@@ -9,7 +8,6 @@ function love.load()
     -- Set up the window.
     love.window.setTitle("Farm Wars")
     love.window.maximize()
-    love.graphics.setBackgroundColor(0, 0, 0, 1)
 
     -- Modules and classes are loaded here.
     menu = require "menu"
@@ -29,18 +27,12 @@ function love.load()
     apple_tree = love.graphics.newImage("resc/images/Apple_Tree.png")
     wheat = love.graphics.newImage("resc/images/Wheat.png")
 
-
-    fence_list_x = {}
-    fence_list_y = {}
-    draw_fence = false
-
-    --temp
     -- TODO: add a nice image here.
-    bg_game = love.graphics.newImage("resc/images/mountains.png")
+    bg_game = love.graphics.newImage("resc/images/Background.png")
     bg_scale = love.graphics.getWidth() / bg_game:getWidth()
 
     -- Init modules
-    menu.load()
+    menu.init()
 end
 
 function initScreen()
@@ -57,24 +49,17 @@ function initScreen()
 
     -- The top left corner of the tile map.
     pos_centered = { x=(screen_width - ((MAX_TILES.x) * scale_factor * 64))/2, y=(screen_height - ((MAX_TILES.y) * scale_factor * 64))/2 }
-    print (pos_centered.x)
+    print (screen_width, screen_height)
+end
 
-    -- Makes a multi dimensional array of [width][height]
-    for i = 0, MAX_TILES.x-1 do  -- tiles_width
-        -- Creates an array that will store a column of tiles
-        column = {}
-
-        for j = 0, MAX_TILES.y-1 do  -- tiles_height
-            -- Randomly generates a number to decide if tile is grass or not.
-            random_number = love.math.random(1, 41)
-            if random_number <= 40 then
-                table.insert(column, 0)
-            else
-                table.insert(column, 1)
-            end
+function love.mousepressed(mouse_x, mouse_y, mouse_button)
+    -- Check what scene is active.
+    if menu.isActive() == true then
+        -- Do nothing?
+    else
+        if mouse_button == 1 then
+            game.checkFence(mouse_x, mouse_y)
         end
-
-        table.insert(g_map_list, column)
     end
 end
 

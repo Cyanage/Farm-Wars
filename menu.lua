@@ -8,15 +8,15 @@ function Menu.isActive()
 end
 
 function Menu.setActive(bool)
-    print("change")
+    print("change-scene")
     isActive = bool
 
     if bool == false then
-        game.init() -- Init the game when starting the game scene.
+        game.load() -- Init the game when starting the game scene.
     end
 end
 
-function Menu.load()
+function Menu.init()
     -- Create the background image and set the scale_factor to the screen.
     bg = love.graphics.newImage("resc/images/mountains.png")
     screen_scale = love.graphics.getWidth() / bg:getWidth()
