@@ -145,6 +145,9 @@ function love.draw()
             end
           end
         end
+=======
+        love.graphics.draw(fence_single, 0 + pos_centered.x, 0 + pos_centered.y, 0, scale_factor, scale_factor, ox, oy, kx, ky)
+>>>>>>> 46c236db0b181bfee3f068f03a03c7db89b4afab
     end
   end
 
