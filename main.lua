@@ -13,6 +13,8 @@ function love.load()
 
     -- Modules and classes are loaded here.
     menu = require "menu"
+    button = require "button"
+    game = require "game"
 
     -- Any initialization code goes after here.
     math.randomseed(os.time())  -- Set the randomizer seed.
@@ -27,7 +29,7 @@ function love.load()
     apple_tree = love.graphics.newImage("resc/images/Apple_Tree.png")
     wheat = love.graphics.newImage("resc/images/Wheat.png")
 
-    --temp
+    -- TODO: add a nice image here.
     bg_game = love.graphics.newImage("resc/images/mountains.png")
     bg_scale = love.graphics.getWidth() / bg_game:getWidth()
 
@@ -97,7 +99,10 @@ function love.draw()
         menu.draw()
     else
         -- Draw the background.
+        love.graphics.setColor(1, 1, 1, 1)  -- Colour
         love.graphics.draw(bg_game, 0, 0, r, bg_scale, bg_scale)
+
+        game.draw()
 
         -- Draws the map
         drawMap()
@@ -110,6 +115,6 @@ function love.update()
     if menu.isActive() == true then
         menu.update()
     else
-
+        game.update()
     end
 end
