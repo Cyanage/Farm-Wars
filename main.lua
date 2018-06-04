@@ -13,21 +13,27 @@ function love.load()
     menu = require "menu"
     button = require "button"
     game = require "game"
+    map = require "map"
 
-    -- Any initialization code goes after here.
-    math.randomseed(os.time())  -- Set the randomizer seed.
+    -- Any initialization code goes after here:
     initScreen()  -- Initialize the tilemap and screen size.
 
-    -- Load Images.
+    -- Load Images:
     fence_top = love.graphics.newImage("resc/images/Fence_Top.png")
     fence_mid = love.graphics.newImage("resc/images/Fence_Mid.png")
     fence_bottom = love.graphics.newImage("resc/images/Fence_Bottom.png")
     fence_single = love.graphics.newImage("resc/images/Fence_Single.png")
-    grass = love.graphics.newImage("resc/images/Grass.png")
-    apple_tree = love.graphics.newImage("resc/images/Apple_Tree.png")
-    wheat = love.graphics.newImage("resc/images/Wheat.png")
+    barn = love.graphics.newImage("resc/images/Barn.png")
 
-    -- TODO: add a nice image here.
+    grass = love.graphics.newImage("resc/images/Grass.png")
+    wheat1 = love.graphics.newImage("resc/images/Wheat1.png")
+    wheat2 = love.graphics.newImage("resc/images/Wheat2.png")
+    wheat3 = love.graphics.newImage("resc/images/Wheat3.png")
+    destroyed = love.graphics.newImage("resc/images/Destroyed.png")
+    tree = love.graphics.newImage("resc/images/Apple_Tree.png")
+    tree_used = love.graphics.newImage("resc/images/Picked_Apple_Tree.png")
+
+    -- Background Image for the game.
     bg_game = love.graphics.newImage("resc/images/Background.png")
     bg_scale = love.graphics.getWidth() / bg_game:getWidth()
 
@@ -38,18 +44,22 @@ end
 function initScreen()
     -- Init screen dimension variables.
     screen_width, screen_height = love.graphics.getWidth(), love.graphics.getHeight()
-    tile_size = math.floor( (screen_width / MAX_TILES.x) + 0.5 )
+    tile_size = math.floor( (screen_width / MAX_TILES.x) / 16 ) * 16
     scale_factor = tile_size / 64
 
+    print ("init tile size ", tile_size)
+
     while (MAX_TILES.y) * scale_factor * 64 > screen_height do
-        tile_size = (scale_factor * 64) - 16
+        --tile_size = (scale_factor * 64) - 16
+        tile_size = tile_size - 16
         scale_factor = tile_size / 64
-        print (scale_factor)
     end
+
+    print ("real tile size ", tile_size)
 
     -- The top left corner of the tile map.
     pos_centered = { x=(screen_width - ((MAX_TILES.x) * scale_factor * 64))/2, y=(screen_height - ((MAX_TILES.y) * scale_factor * 64))/2 }
-    print (screen_width, screen_height)
+    print ("screen w/h ", screen_width, screen_height)
 end
 
 function love.mousepressed(mouse_x, mouse_y, mouse_button)
@@ -57,8 +67,9 @@ function love.mousepressed(mouse_x, mouse_y, mouse_button)
     if menu.isActive() == true then
         -- Do nothing?
     else
+        -- If player clicks, try to place a fence.
         if mouse_button == 1 then
-            game.checkFence(mouse_x, mouse_y)
+            game.setFence(mouse_x, mouse_y)
         end
     end
 end
@@ -68,7 +79,7 @@ function love.draw()
     if menu.isActive() == true then
         menu.draw()
     else
-        Game.draw()
+        game.draw()
     end
   end
 

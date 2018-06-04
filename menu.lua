@@ -8,7 +8,7 @@ function Menu.isActive()
 end
 
 function Menu.setActive(bool)
-    print("change-scene")
+    print("changed scenes.")
     isActive = bool
 
     if bool == false then
@@ -36,7 +36,7 @@ end
 function Menu.draw()
     -- Bottom
     love.graphics.setColor(1, 1, 1, 1)  -- Colour
-    love.graphics.draw(bg, 0, 0, r, sreenscreen_scale_scale, screen_scale)
+    love.graphics.draw(bg, 0, 0, r, screen_scale, screen_scale)
 
     love.graphics.draw(info, xPosUi, 500 * screen_scale, 0, screen_scale/1.5, screen_scale/1.5)
 
@@ -45,7 +45,7 @@ function Menu.draw()
 end
 
 function Menu.update()
-    start_button:isClicked()
+    start_button:isClicked()  -- Check if the start button has been clicked.
 end
 
 return Menu
