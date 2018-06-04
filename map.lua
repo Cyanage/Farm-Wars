@@ -31,7 +31,7 @@ function getRandomInitTileValue()
     if random_number <= 40 then
         return 0
     else
-        return 30
+        return 5
     end
 end
 

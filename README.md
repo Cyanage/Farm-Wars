@@ -2,18 +2,15 @@
 
 TODO:
 
-- build sprites
-- do start screen - geb
-- generates a tilemap with resources
-- have ai zone and player zone
-- have turns
-- have ai claim tiles
-- have player able to claim tiles
-- add in money
-- have ai prioritize stuff
-- can attack ai
-- ai can attack you
-- attacks affect money
+- ALMOST -- build sprites
+- DONE -- do start screen - geb
+- DONE -- generates a tilemap with resources
+- NOT YET -- have both player zones
+- STARTED -- have turns
+- NOT YET -- have player able to claim tiles
+- NOT YET -- add in money
+- NOT YET -- can attack players
+- NOT YET -- attacks affect money
 
 **plan to have this stuff done by 15th of june, a couple days before 21st**
 
@@ -25,11 +22,8 @@ images:
 - fence
 - barn
 - angry pitchfork guy (4 frame animation)
-- road (?)
-- farmer (4 frame animation)
 - wheat (3 levels)
-- used apple tree (3 levels)
-- broken fence (?)
+- used apple tree
 
 You'll start in the main screen and there will be menu options to exit or play, when you click play, it generates a map with resources and draws your barns.
 You then have 2, 2x2 tiles to place in your area, but only tiles that are touching tiles you already own.
