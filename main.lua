@@ -8,15 +8,13 @@ function love.load()
     -- Set up the window.
     love.window.setTitle("Farm Wars")
     love.window.maximize()
-    
+
     -- Modules and classes are loaded here.
     menu = require "menu"
     button = require "button"
     game = require "game"
     map = require "map"
     money = require "money"
-
-    money:load()
 
     turnManager = require "turnManager"
 

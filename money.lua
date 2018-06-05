@@ -1,7 +1,7 @@
 Money = {}
 
 -- This function makes a new instance of this object.  (this is the constructor.)
-function Enemy:new(id)
+function Money:new()
     -- Add member variables here.
     selfObj = {
         total_money = 50,
