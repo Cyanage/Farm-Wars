@@ -1,17 +1,18 @@
 Money = {}
 
 -- This function makes a new instance of this object.  (this is the constructor.)
-function Enemy:new(id)
+function Money:new()
     -- Add member variables here.
     selfObj = {
         total_money = 50,
-        money_per_turn = 1,
-        time = 0
+        money_per_turn = 3,
+        time = 0,
+        button_clicked = false
     }
 
     selfObj.time = os.time()
 
-    print (self.total_money)
+    print (selfObj.total_money)
 
     -- Make this a class.
     self.__index = self
@@ -23,10 +24,6 @@ function Money:update()
     self.total_money = self.total_money + self.money_per_turn
     self.time = os.time()
     print (self.total_money)
-  end
-
-  if love.keyboard.isDown("=") then
-    print ("add money")
   end
 end
 

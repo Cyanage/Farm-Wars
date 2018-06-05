@@ -7,7 +7,7 @@ function love.load()
 
     -- Set up the window.
     love.window.setTitle("Farm Wars")
-    --love.window.maximize()
+    love.window.maximize()
 
     -- Modules and classes are loaded here.
     menu = require "menu"
@@ -16,7 +16,7 @@ function love.load()
     map = require "map"
     money = require "money"
 
-    money:load()
+    player_money = money:new()
 
     turnManager = require "turnManager"
 
@@ -91,7 +91,7 @@ function love.draw()
 function love.update()
 
     --adds current money per turn every second
-    money:update()
+    player_money:update()
     -- Check what scene is active.
     if menu.isActive() == true then
         menu.update()
