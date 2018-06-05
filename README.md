@@ -2,15 +2,15 @@
 
 TODO:
 
-- ALMOST -- build sprites
+- ALMOST -- build sprites - geb
 - DONE -- do start screen - geb
 - DONE -- generates a tilemap with resources
 - NOT YET -- have both player zones
-- STARTED -- have turns
+- STARTED -- have turns - geb
 - NOT YET -- have player able to claim tiles
-- NOT YET -- add in money
-- NOT YET -- can attack players
-- NOT YET -- attacks affect money
+- NOT YET -- add in money - connor
+- NOT YET -- can attack players - connor
+- NOT YET -- attacks affect money - connor
 
 **plan to have this stuff done by 15th of june, a couple days before 21st**
 

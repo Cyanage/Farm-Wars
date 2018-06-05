@@ -14,6 +14,10 @@ function love.load()
     button = require "button"
     game = require "game"
     map = require "map"
+    money = require "money"
+
+    money:load()
+    print ("hallelujah")
 
     -- Any initialization code goes after here:
     initScreen()  -- Initialize the tilemap and screen size.
