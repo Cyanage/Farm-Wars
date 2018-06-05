@@ -28,7 +28,7 @@ function Game.draw()
 end
 
 function Game.update()
-
+    turnManager.update()
 end
 
 return Game

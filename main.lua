@@ -17,7 +17,8 @@ function love.load()
     money = require "money"
 
     money:load()
-    print ("hallelujah")
+
+    turnManager = require "turnManager"
 
     -- Any initialization code goes after here:
     initScreen()  -- Initialize the tilemap and screen size.
@@ -26,10 +27,10 @@ function love.load()
     fence_top = love.graphics.newImage("resc/images/Fence_Top.png")
     fence_mid = love.graphics.newImage("resc/images/Fence_Mid.png")
     fence_bottom = love.graphics.newImage("resc/images/Fence_Bottom.png")
-    fence_single = love.graphics.newImage("resc/images/Fence_Single.png")
+    fence_single = love.graphics.newImage("resc/images/Fence_Single_v2.png")
     barn = love.graphics.newImage("resc/images/Barn.png")
 
-    grass = love.graphics.newImage("resc/images/Grass.png")
+    grass = love.graphics.newImage("resc/images/GrassVer2.png")
     wheat1 = love.graphics.newImage("resc/images/Wheat1.png")
     wheat2 = love.graphics.newImage("resc/images/Wheat2.png")
     wheat3 = love.graphics.newImage("resc/images/Wheat3.png")
