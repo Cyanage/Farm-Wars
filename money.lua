@@ -1,13 +1,21 @@
-
 Money = {}
 
-function Money:load()
+-- This function makes a new instance of this object.  (this is the constructor.)
+function Enemy:new(id)
+    -- Add member variables here.
+    selfObj = {
+        total_money = 50,
+        money_per_turn = 1,
+        time = 0
+    }
 
-  self.total_money = 50
-  self.money_per_turn = 1
-  self.time = os.time()
+    selfObj.time = os.time()
 
-  print (self.total_money)
+    print (self.total_money)
+
+    -- Make this a class.
+    self.__index = self
+    return setmetatable(selfObj, self)
 end
 
 function Money:update()
