@@ -22,6 +22,11 @@ function Money:update()
   if os.time() - self.time >= 1 then
     self.total_money = self.total_money + self.money_per_turn
     self.time = os.time()
+    print (self.total_money)
+  end
+
+  if love.keyboard.isDown("=") then
+    print ("add money")
   end
 end
 
