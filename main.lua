@@ -7,8 +7,8 @@ function love.load()
 
     -- Set up the window.
     love.window.setTitle("Farm Wars")
-    love.window.maximize()
-    
+    --love.window.maximize()
+
     -- Modules and classes are loaded here.
     menu = require "menu"
     button = require "button"
@@ -52,7 +52,7 @@ function initScreen()
     tile_size = math.floor( (screen_width / MAX_TILES.x) / 16 ) * 16
     scale_factor = tile_size / 64
 
-    print ("init tile size ", tile_size)
+    --print ("init tile size ", tile_size)
 
     while (MAX_TILES.y) * scale_factor * 64 > screen_height do
         --tile_size = (scale_factor * 64) - 16
@@ -60,11 +60,11 @@ function initScreen()
         scale_factor = tile_size / 64
     end
 
-    print ("real tile size ", tile_size)
+    --print ("real tile size ", tile_size)
 
     -- The top left corner of the tile map.
     pos_centered = { x=(screen_width - ((MAX_TILES.x) * scale_factor * 64))/2, y=(screen_height - ((MAX_TILES.y) * scale_factor * 64))/2 }
-    print ("screen w/h ", screen_width, screen_height)
+    --print ("screen w/h ", screen_width, screen_height)
 end
 
 function love.mousepressed(mouse_x, mouse_y, mouse_button)
@@ -89,6 +89,9 @@ function love.draw()
   end
 
 function love.update()
+
+    --adds current money per turn every second
+    money:update()
     -- Check what scene is active.
     if menu.isActive() == true then
         menu.update()
