@@ -92,6 +92,7 @@ function love.update()
 
     --adds current money per turn every second
     player_money:update()
+    print (player_money:get_current_money())
     -- Check what scene is active.
     if menu.isActive() == true then
         menu.update()
