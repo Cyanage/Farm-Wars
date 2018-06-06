@@ -1,5 +1,5 @@
 -- Global and Constant variables.
-    MAX_TILES = {x=16, y=9}  -- The prefered amount of tiles to be drawn.
+    MAX_TILES = {x=16, y=8}  -- The prefered amount of tiles to be drawn.
 
 function love.load()
     -- This is a library that simulates classes in lua (even though lua allready has classes, *cough cough*)
@@ -15,6 +15,7 @@ function love.load()
     game = require "game"
     map = require "map"
     money = require "money"
+    ui = require "ui"
 
     player_money = money:new()
 
@@ -44,6 +45,7 @@ function love.load()
 
     -- Init modules
     menu.init()
+    ui.init()
 end
 
 function initScreen()
@@ -54,7 +56,7 @@ function initScreen()
 
     --print ("init tile size ", tile_size)
 
-    while (MAX_TILES.y) * scale_factor * 64 > screen_height do
+    while (MAX_TILES.y+1) * scale_factor * 64 > screen_height do
         --tile_size = (scale_factor * 64) - 16
         tile_size = tile_size - 16
         scale_factor = tile_size / 64
@@ -63,7 +65,7 @@ function initScreen()
     --print ("real tile size ", tile_size)
 
     -- The top left corner of the tile map.
-    pos_centered = { x=(screen_width - ((MAX_TILES.x) * scale_factor * 64))/2, y=(screen_height - ((MAX_TILES.y) * scale_factor * 64))/2 }
+    pos_centered = { x=(screen_width - ((MAX_TILES.x) * scale_factor * 64))/2, y=((screen_height - ((MAX_TILES.y+1) * scale_factor * 64))/2)+tile_size }
     --print ("screen w/h ", screen_width, screen_height)
 end
 

@@ -25,10 +25,12 @@ function Game.draw()
     love.graphics.draw(bg_game, 0, 0, r, bg_scale, bg_scale)
 
     map.draw()  -- This draws all the tiles to the screen.
+    ui.draw()
 end
 
 function Game.update()
     turnManager.update()
+    ui.update()
 end
 
 return Game
