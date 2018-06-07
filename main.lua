@@ -14,7 +14,16 @@ function love.load()
     money = require "money"
     ui = require "ui"
 
+    font = love.graphics.newFont(64)
+    love.graphics.setFont(font)
+
     player_money = money:new()
+    enemy_money = money:new()
+    enemy_font_x = 350
+
+    --so that when enemy moey goes up, it doesn't just fly of to left
+    --TODO, implement this
+    has_gone_up = false
 
     turnManager = require "turnManager"
 
@@ -85,13 +94,22 @@ function love.draw()
     else
         game.draw()
     end
+
+    love.graphics.print(player_money:get_current_money(), 270, 63, r, sx, sy, ox, oy, kx, ky)
+    love.graphics.print(enemy_money:get_current_money(), screen_width - enemy_font_x, 63, r, sx, sy, ox, oy, kx, ky)
+
+    if enemy_money:get_current_money() >= 100 and has_gone_up == false then
+      enemy_font_x = enemy_font_x + 40
+      has_gone_up = true
+    end
   end
 
 function love.update()
     --adds current money per turn every second
     player_money:update()
     print (player_money:get_current_money())
-    
+
+    enemy_money:update()
     -- Check what scene is active.
     if menu.isActive() == true then
         menu.update()
