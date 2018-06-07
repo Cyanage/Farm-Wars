@@ -2,9 +2,6 @@
     MAX_TILES = {x=16, y=8}  -- The prefered amount of tiles to be drawn.
 
 function love.load()
-    -- This is a library that simulates classes in lua (even though lua allready has classes, *cough cough*)
-    Object = require "classic"
-
     -- Set up the window.
     love.window.setTitle("Farm Wars")
     love.window.maximize()
@@ -113,9 +110,10 @@ function love.draw()
   end
 
 function love.update()
-
     --adds current money per turn every second
     player_money:update()
+    print (player_money:get_current_money())
+
     enemy_money:update()
     -- Check what scene is active.
     if menu.isActive() == true then
