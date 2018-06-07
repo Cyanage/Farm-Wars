@@ -25,8 +25,8 @@ function love.load()
     enemy_font_x = 350
 
     --so that when enemy moey goes up, it doesn't just fly of to left
-    --TODO, implement this
     has_gone_up = false
+    has_gone_down = false
 
     turnManager = require "turnManager"
 
@@ -101,9 +101,14 @@ function love.draw()
     love.graphics.print(player_money:get_current_money(), 270, 63, r, sx, sy, ox, oy, kx, ky)
     love.graphics.print(enemy_money:get_current_money(), screen_width - enemy_font_x, 63, r, sx, sy, ox, oy, kx, ky)
 
-    if enemy_money:get_current_money() >= 100 and has_gone_up == false then
+    if enemy_money:get_current_money() >= 100 or enemy_money:get_current_money() <= -100 and has_gone_up == false then
       enemy_font_x = enemy_font_x + 40
       has_gone_up = true
+    end
+
+    if enemy_money:get_current_money() < 0  and has_gone_down == false then
+      enemy_font_x = enemy_font_x + 20
+      has_gone_down = true
     end
   end
 

@@ -5,7 +5,7 @@ function Money:new()
     -- Add member variables here.
     selfObj = {
         total_money = 50,
-        money_per_turn = 5,
+        money_per_turn = -5,
         time = 0,
         button_clicked = false
     }
