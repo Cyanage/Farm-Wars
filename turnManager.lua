@@ -27,20 +27,22 @@ end
 
 function TurnManager.update()
     if TurnManager.currentPlayerTurn == RED then
-        if TurnManager.currentAction == _checkTileClick then
+        if TurnManager.currentAction == 0 then
             _checkTileClick()
         end
     else
-        if TurnManager.currentAction == _checkTileClick then
+        if TurnManager.currentAction == 0 then
             _checkTileClick()
         end
     end
 end
 
 function _checkTileClick()
-    -- TODO: Make sure the mouse is on *any* tile.
-    if love.mouse.isDown(0) == true and love.mouse.getX() > pos_centered.x then
-
+    -- Makes sure the mouse is on a tile.
+    if love.mouse.isDown(1) == true and love.mouse.getX() > pos_centered.x and love.mouse.getX() < pos_centered.x + (MAX_TILES.x*tile_size) and love.mouse.getY() > pos_centered.y and love.mouse.getY() < pos_centered.y + (MAX_TILES.y*tile_size) then
+        x_tile = math.floor((love.mouse.getX() - pos_centered.x)/tile_size)
+        y_tile = math.floor((love.mouse.getY() - pos_centered.y)/tile_size)
+        print ('x', x_tile, 'y', y_tile)
     end
 end
 

@@ -1,9 +1,19 @@
 UI = {}
 
+LEFT = false
+RIGHT = true
+
+-- Menu controlling variables.
+local drawMenu = false
+local menuIsMinimized = false
+local menuPosition = LEFT
+
 -- load images
 function UI.init()
     red_turn_img = love.graphics.newImage("resc/images/red_turn_bar.png")
     blue_turn_img = love.graphics.newImage("resc/images/blue_turn_bar.png")
+
+    menu_pane_img = love.graphics.newImage("resc/images/menu_pane.png")
 end
 
 function UI.draw()
@@ -17,6 +27,19 @@ function UI.draw()
     end
 
     love.graphics.draw(turn_img, x_pos, y_pos, 0, scale_factor, scale_factor)
+
+    if drawMenu == true then
+
+    end
+end
+
+-- This function starts drawing the menu.
+function UI.openMenu(side)
+    drawMenu = true
+end
+
+function UI.toggleMenuSize()
+
 end
 
 function UI.update()
