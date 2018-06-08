@@ -2,6 +2,7 @@ Game = {}
 
 function Game.load()
     map.load()  -- Load the map.
+    turnManager.load()
 end
 -- This function tries to make a tile into a fence.
 function Game.setFence(mouse_x, mouse_y)

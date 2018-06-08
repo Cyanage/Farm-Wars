@@ -29,13 +29,23 @@ function UI.draw()
     love.graphics.draw(turn_img, x_pos, y_pos, 0, scale_factor, scale_factor)
 
     if drawMenu == true then
-
+        if menuPosition == LEFT then
+            love.graphics.draw(menu_pane_img, menu_pane_img:getWidth()*scale_factor + pos_centered.x, pos_centered.y - tile_size, 0, -scale_factor, scale_factor)
+        else
+            love.graphics.draw(menu_pane_img, (tile_size*MAX_TILES.x) - menu_pane_img:getWidth()*scale_factor + pos_centered.x, pos_centered.y - tile_size, 0, scale_factor, scale_factor)
+        end
     end
 end
 
 -- This function starts drawing the menu.
 function UI.openMenu(side)
     drawMenu = true
+    menuPosition = side
+end
+
+-- This function stops drawing the menu.
+function UI.closeMenu()
+    drawMenu = false
 end
 
 function UI.toggleMenuSize()

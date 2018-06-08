@@ -34,14 +34,14 @@ function Menu.init()
 end
 
 function Menu.draw()
-    -- Bottom
-    love.graphics.setColor(1, 1, 1, 1)  -- Colour
+    -- Bottom.
+    love.graphics.setColor(1, 1, 1, 1)  -- Colour.
     love.graphics.draw(bg, 0, 0, r, screen_scale, screen_scale)
 
     love.graphics.draw(info, xPosUi, 500 * screen_scale, 0, screen_scale/1.5, screen_scale/1.5)
 
     start_button:draw()
-    --Top
+    -- Top.
 end
 
 function Menu.update()
