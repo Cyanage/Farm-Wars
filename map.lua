@@ -66,7 +66,7 @@ function drawMap()
             -- Find the position for the tile.
             local tile_x = ( (x - 1) * tile_size ) + pos_centered.x
             local tile_y = ( (y - 1) * tile_size ) + pos_centered.y
-
+            
             -- Check if tile is tinted.
             if map_matrix[x][y] >= 10 and map_matrix[x][y] < 20 or map_matrix[x][y] >= 40 and map_matrix[x][y] < 50 then
                 love.graphics.setColor(1, 0.4, 0.4, 1)  -- Red colour mod
