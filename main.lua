@@ -80,9 +80,9 @@ function love.mousepressed(mouse_x, mouse_y, mouse_button)
     if menu.isActive() == true then
         -- Do nothing?
     else
-        -- If player clicks, try to place a fence.
+        -- If player clicks, try to place a fence. (DEBUG: this)
         if mouse_button == 1 then
-            game.setFence(mouse_x, mouse_y)
+            --game.setFence(mouse_x, mouse_y)
         end
     end
 end

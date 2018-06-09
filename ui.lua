@@ -6,7 +6,7 @@ RIGHT = true
 -- Menu controlling variables.
 local drawMenu = false
 local menuIsMinimized = false
-local menuPosition = LEFT
+menuPosition = LEFT
 
 -- load images
 function UI.init()
