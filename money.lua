@@ -12,7 +12,7 @@ function Money:new()
 
     selfObj.time = os.time()
 
-    print (selfObj.total_money)
+    --print (selfObj.total_money)
 
     -- Make this a class.
     self.__index = self
@@ -27,7 +27,7 @@ function Money:update()
   end
 
   if self.total_money <= 0 then
-    print ("you've lost")
+    --print ("you've lost")
   end
 end
 

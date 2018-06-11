@@ -10,6 +10,8 @@ TurnManager.currentPlayerTurn = RED
 local mouseTrigger = false
 local mouseUp = false
 
+local clickedTile = {x=0, y=0}
+
 function TurnManager.load()
     --TurnManager.inSetup = true
     love.timer.sleep( 0.25 )
@@ -65,6 +67,9 @@ function _checkTileClick()
             UI.openMenu(RIGHT)
         end
 
+        clickedTile = {x=x_tile, y=y_tile}
+        game.setMassive (x_tile, y_tile, true)
+
         TurnManager.currentAction = 1
 
         mouseTrigger = false
@@ -78,12 +83,21 @@ function _checkTileClick()
     end
 end
 
-function checkMouseOverButton(mouse_x_pos, mouse_y_pos)
-    buy_fence_width = buy_fence_unpressed_img:getWidth()
-    buy_fence_height = buy_fence_unpressed_img:getHeight()
+function checkButtonActions(mouse_x_pos, mouse_y_pos)
+    buy_fence_width = buy_fence_unpressed_img:getWidth() * scale_factor
+    buy_fence_height = buy_fence_unpressed_img:getHeight() * scale_factor
 
-    if mouse_x_pos < buy_fence_x and mouse_x_pos > buy_fence_x + buy_fence_width and mouse_y_pos < buy_fence_y and mouse_y_pos > buy_fence_y + buy_fence_height then
+    print ("mouse x smaller than", mouse_x_pos, " < ", buy_fence_x)
+    print ("mouse x larger than", mouse_x_pos, " > ", buy_fence_x + buy_fence_width)
+
+    if mouse_x_pos > buy_fence_x and mouse_x_pos < buy_fence_x + buy_fence_width and mouse_y_pos > buy_fence_y and mouse_y_pos < buy_fence_y + buy_fence_height then
         print "clicked button"
+        buy_fence_is_pressed = true
+        game.setFence(clickedTile.x, clickedTile.y)
+        game.setMassive(clickedTile.x, clickedTile.y, false)
+        --TurnManager.currentAction = 0
+        --UI.closeMenu()
+        print ( clickedTile.x, clickedTile.y )
     else
         print " no clicked button !!!!!!!!"
         --something
@@ -109,12 +123,12 @@ function _checkMenuClick()
 
     -- ACTION  (Check if the mouse was clicked over a button)
     if mouseTrigger == true then
-        mouse_x_pos = love.mouse.getX() - pos_centered.x
-        mouse_y_pos = love.mouse.getY() - pos_centered.y
+        mouse_x_pos = love.mouse.getX()
+        mouse_y_pos = love.mouse.getY()
 
         print ('x_pos', mouse_x_pos, 'y_pos', mouse_y_pos)
 
-        checkMouseOverButton(mouse_x_pos, mouse_y_pos)  -- Check if the mouse is over the button.
+        checkButtonActions(mouse_x_pos, mouse_y_pos)  -- Check if the mouse is over the button.
 
         mouseTrigger = false
 
@@ -123,6 +137,7 @@ function _checkMenuClick()
 
     -- COMPLETE CASE
     if mouseUp == true and love.mouse.isDown(1) == false then
+        buy_fence_is_pressed = false
         mouseUp = false
         print "done"
     end

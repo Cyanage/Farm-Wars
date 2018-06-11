@@ -112,7 +112,7 @@ function love.draw()
 function love.update()
     --adds current money per turn every second
     player_money:update()
-    print (player_money:get_current_money())
+    --print (player_money:get_current_money())
 
     enemy_money:update()
     -- Check what scene is active.

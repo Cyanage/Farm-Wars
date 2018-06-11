@@ -4,17 +4,41 @@ function Game.load()
     map.load()  -- Load the map.
     turnManager.load()
 end
+
 -- This function tries to make a tile into a fence.
-function Game.setFence(mouse_x, mouse_y)
-    -- Convert mouse position to tile indexes.
-    local tile_x = math.floor( (mouse_x - pos_centered.x) / tile_size ) + 1
-    local tile_y = math.floor( (mouse_y - pos_centered.y) / tile_size ) + 1
+function Game.setFence(x_index, y_index)
+    tile_x = x_index + 1
+    tile_y = y_index + 1
 
     if tile_x > 0 and tile_x <= MAX_TILES.x and tile_y > 0 and tile_y <= MAX_TILES.y then
         if map.isTileFence(tile_x, tile_y) == false then
             map.setTile(tile_x, tile_y, map.getTile(tile_x, tile_y) + 30)  -- Make tile a fence.
         else
             print("SOMeTHING TRIED TO SET A TILE THAT WAS A FENCE WAS TO BE A FENCE.")
+        end
+    end
+end
+
+-- This function tries to make a tile into a fence.
+function Game.setMassive(x_index, y_index, is_massive)
+    tile_x = x_index + 1
+    tile_y = y_index + 1
+
+    if is_massive == true then
+        if tile_x > 0 and tile_x <= MAX_TILES.x and tile_y > 0 and tile_y <= MAX_TILES.y then
+            if map.isMassive(tile_x, tile_y) == false then
+                map.setTile(tile_x, tile_y, map.getTile(tile_x, tile_y) + 60)  -- Make tile a fence.
+            else
+                print("ATTEMPT TO SET A TILE TO BE THE SAME TILE AS ITSELF.")
+            end
+        end
+    else
+        if tile_x > 0 and tile_x <= MAX_TILES.x and tile_y > 0 and tile_y <= MAX_TILES.y then
+            if map.isMassive(tile_x, tile_y) == true then
+                map.setTile(tile_x, tile_y, map.getTile(tile_x, tile_y) - 60)  -- Make tile a fence.
+            else
+                print("ATTEMPT TO SET A TILE TO BE THE SAME TILE AS ITSELF.")
+            end
         end
     end
 end
