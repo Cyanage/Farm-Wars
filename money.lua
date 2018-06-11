@@ -25,10 +25,6 @@ function Money:update()
     self.time = os.time()
     --print (self.total_money)
   end
-
-  if self.total_money <= 0 then
-    print ("you've lost")
-  end
 end
 
 function Money:add_money_per_turn(a)

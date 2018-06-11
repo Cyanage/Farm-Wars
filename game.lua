@@ -3,6 +3,9 @@ Game = {}
 function Game.load()
     map.load()  -- Load the map.
     turnManager.load()
+    gameDone = false
+    --stores the team of the winner and loser
+    finalText = {"w", "l"}
 end
 -- This function tries to make a tile into a fence.
 function Game.setFence(mouse_x, mouse_y)
@@ -25,6 +28,10 @@ function Game.draw()
     love.graphics.setColor(1, 1, 1, 1)  -- Colour
     love.graphics.draw(bg_game, 0, 0, r, bg_scale, bg_scale)
 
+    if gameDone == true then
+      love.graphics.print(finalText[1] .. " has defeated " .. finalText[2], 100, 100)
+    end
+
     map.draw()  -- This draws all the tiles to the screen.
     ui.draw()
 end
@@ -32,6 +39,12 @@ end
 function Game.update()
     turnManager.update()
     ui.update()
+end
+
+function Game.finish(winner, loser)
+  gameDone = true
+  finalText[1] = winner
+  finalText[2] = loser
 end
 
 return Game

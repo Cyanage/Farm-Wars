@@ -4,7 +4,7 @@
 function love.load()
     -- Set up the window.
     love.window.setTitle("Farm Wars")
-    love.window.maximize()
+    --love.window.maximize()
 
     -- Modules and classes are loaded here.
     menu = require "menu"
@@ -95,9 +95,6 @@ function love.draw()
         game.draw()
     end
 
-    love.graphics.print(player_money:get_current_money(), 270, 63, r, sx, sy, ox, oy, kx, ky)
-    love.graphics.print(enemy_money:get_current_money(), screen_width - enemy_font_x, 63, r, sx, sy, ox, oy, kx, ky)
-
     if enemy_money:get_current_money() >= 100 or enemy_money:get_current_money() <= -100 and has_gone_up == false then
       enemy_font_x = enemy_font_x + 40
       has_gone_up = true
@@ -112,9 +109,13 @@ function love.draw()
 function love.update()
     --adds current money per turn every second
     player_money:update()
-    print (player_money:get_current_money())
 
     enemy_money:update()
+
+    if love.keyboard.isDown("a") then
+      game.finish("Bill Cosby", "You")
+    end
+
     -- Check what scene is active.
     if menu.isActive() == true then
         menu.update()
