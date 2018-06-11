@@ -78,6 +78,18 @@ function _checkTileClick()
     end
 end
 
+function checkMouseOverButton(mouse_x_pos, mouse_y_pos)
+    buy_fence_width = buy_fence_unpressed_img:getWidth()
+    buy_fence_height = buy_fence_unpressed_img:getHeight()
+
+    if mouse_x_pos < buy_fence_x and mouse_x_pos > buy_fence_x + buy_fence_width and mouse_y_pos < buy_fence_y and mouse_y_pos > buy_fence_y + buy_fence_height then
+        print "clicked button"
+    else
+        print " no clicked button !!!!!!!!"
+        --something
+    end
+end
+
 function _checkMenuClick()
     -- Checks if the mouse is over the menu or not.
     -- START CASE
@@ -85,28 +97,24 @@ function _checkMenuClick()
         if mouseUp == false and love.mouse.isDown(1) == true and love.mouse.getX() > pos_centered.x and love.mouse.getX() < menu_pane_img:getWidth()*scale_factor + pos_centered.x and love.mouse.getY() > pos_centered.y and love.mouse.getY() < pos_centered.y + (MAX_TILES.y*tile_size) then
             mouseTrigger = true
             mouseUp = true
-            print "start"
+            print "start left"
         end
     else
         if mouseUp == false and love.mouse.isDown(1) == true and love.mouse.getX() > (tile_size*MAX_TILES.x) - menu_pane_img:getWidth()*scale_factor + pos_centered.x and love.mouse.getX() < (tile_size*MAX_TILES.x) + pos_centered.x and love.mouse.getY() > pos_centered.y and love.mouse.getY() < pos_centered.y + (MAX_TILES.y*tile_size) then
             mouseTrigger = true
             mouseUp = true
-            print "start"
+            print "start right"
         end
     end
 
     -- ACTION  (Check if the mouse was clicked over a button)
     if mouseTrigger == true then
-        x_tile = math.floor((love.mouse.getX() - pos_centered.x)/tile_size)
-        y_tile = math.floor((love.mouse.getY() - pos_centered.y)/tile_size)
+        mouse_x_pos = love.mouse.getX() - pos_centered.x
+        mouse_y_pos = love.mouse.getY() - pos_centered.y
 
-        print ('x2', x_tile, 'y2', y_tile)
+        print ('x_pos', mouse_x_pos, 'y_pos', mouse_y_pos)
 
-        if x_tile > math.floor(MAX_TILES.x/2)-1 then
-            UI.openMenu(RIGHT)
-        else
-            UI.openMenu(LEFT)
-        end
+        checkMouseOverButton(mouse_x_pos, mouse_y_pos)  -- Check if the mouse is over the button.
 
         mouseTrigger = false
 

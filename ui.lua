@@ -14,7 +14,14 @@ function UI.init()
     blue_turn_img = love.graphics.newImage("resc/images/blue_turn_bar.png")
 
     menu_pane_img = love.graphics.newImage("resc/images/menu_pane.png")
+
+    buy_fence_pressed_img = love.graphics.newImage("resc/images/buy_fence_pressed.png")
+    buy_fence_unpressed_img = love.graphics.newImage("resc/images/buy_fence_unpressed.png")
 end
+
+buy_fence_is_pressed = false
+buy_fence_x = 0
+buy_fence_y = 0
 
 function UI.draw()
     local x_pos = pos_centered.x
@@ -29,10 +36,32 @@ function UI.draw()
     love.graphics.draw(turn_img, x_pos, y_pos, 0, scale_factor, scale_factor)
 
     if drawMenu == true then
+        menuPosY = pos_centered.y  -- The y position of the menu is allways going to be the same.
         if menuPosition == LEFT then
-            love.graphics.draw(menu_pane_img, menu_pane_img:getWidth()*scale_factor + pos_centered.x, pos_centered.y, 0, -scale_factor, scale_factor)
+            menuPosX = menu_pane_img:getWidth()*scale_factor + pos_centered.x
+            direction_mod = -1
         else
-            love.graphics.draw(menu_pane_img, (tile_size*MAX_TILES.x) - menu_pane_img:getWidth()*scale_factor + pos_centered.x, pos_centered.y, 0, scale_factor, scale_factor)
+            menuPosX = (tile_size*MAX_TILES.x) - menu_pane_img:getWidth()*scale_factor + pos_centered.x
+            direction_mod = 1
+        end
+
+        -- Draw the menu.
+        love.graphics.draw(menu_pane_img, menuPosX, menuPosY, 0, direction_mod * scale_factor, scale_factor)
+
+        -- Calculate the position of the button.
+        if menuPosition == LEFT then
+            buy_fence_x = menuPosX - 93*4*scale_factor
+            buy_fence_y = menuPosY + 6*4*scale_factor
+        else
+            buy_fence_x = menuPosX + 51*4*scale_factor
+            buy_fence_y = menuPosY + 6*4*scale_factor
+        end
+
+        -- Draw the button.
+        if buy_fence_is_pressed == false then
+            love.graphics.draw(buy_fence_unpressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
+        else
+            love.graphics.draw(buy_fence_pressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
         end
     end
 end
