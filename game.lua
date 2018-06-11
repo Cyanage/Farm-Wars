@@ -3,6 +3,8 @@ Game = {}
 function Game.load()
     map.load()  -- Load the map.
     turnManager.load()
+    gameDone = false  --whether the game is done or not
+    finalText = {"w", "l"}  --stores the name of the winner and loser
 end
 
 -- This function tries to make a tile into a fence.
@@ -51,11 +53,24 @@ function Game.draw()
 
     map.draw()  -- This draws all the tiles to the screen.
     ui.draw()
+
+    --displays that the winner has beaten the loser overtop of map and ui
+    if gameDone == true then
+      love.graphics.print(finalText[1] .. " has defeated " .. finalText[2], 100, 100)
+    end
 end
 
 function Game.update()
     turnManager.update()
     ui.update()
+end
+
+--when one player wins this is called
+function Game.finish(winner, loser) -- gets name of winner and loser
+
+  gameDone = true
+  finalText[1] = winner --gets the name of the winner
+  finalText[2] = loser  --gets the name of the loser
 end
 
 return Game
