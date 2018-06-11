@@ -28,12 +28,12 @@ function Game.draw()
     love.graphics.setColor(1, 1, 1, 1)  -- Colour
     love.graphics.draw(bg_game, 0, 0, r, bg_scale, bg_scale)
 
+    map.draw()  -- This draws all the tiles to the screen.
+    ui.draw()
+
     if gameDone == true then
       love.graphics.print(finalText[1] .. " has defeated " .. finalText[2], 100, 100)
     end
-
-    map.draw()  -- This draws all the tiles to the screen.
-    ui.draw()
 end
 
 function Game.update()
