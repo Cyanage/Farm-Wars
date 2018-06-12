@@ -7,12 +7,12 @@ function love.load()
     love.window.maximize()
 
     -- Modules and classes are loaded here.
-    menu = require "menu"
-    button = require "button"
-    game = require "game"
-    map = require "map"
-    money = require "money"
-    ui = require "ui"
+    menu = require "src/menu"
+    button = require "src/objects/button"
+    game = require "src/game"
+    map = require "src/map"
+    money = require "src/objects/money"
+    ui = require "src/ui"
 
     font = love.graphics.newFont(64)
     love.graphics.setFont(font)
@@ -25,7 +25,7 @@ function love.load()
     has_gone_up = false
     has_gone_down = false
 
-    turnManager = require "turnManager"
+    turnManager = require "src/turnManager"
 
     -- Any initialization code goes after here:
     initScreen()  -- Initialize the tilemap and screen size.

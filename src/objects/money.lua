@@ -40,7 +40,6 @@ function Money:add_money(money)
 end
 
 function Money:get_current_money()
-  print (self.total_money)
   return self.total_money
 end
 
