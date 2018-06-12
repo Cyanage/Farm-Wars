@@ -96,6 +96,9 @@ function love.draw()
         game.draw()
     end
 
+    player_money:draw(100, 54)
+    enemy_money:draw(enemy_font_x, 54)
+
     if enemy_money:get_current_money() >= 100 or enemy_money:get_current_money() <= -100 and has_gone_up == false then
       enemy_font_x = enemy_font_x + 40
       has_gone_up = true
