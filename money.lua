@@ -5,7 +5,7 @@ function Money:new()
     -- Add member variables here.
     selfObj = {
         total_money = 50,
-        money_per_turn = -5,
+        money_per_turn = 0,
         time = 0,
         button_clicked = false
     }
@@ -35,8 +35,17 @@ function Money:add_money_per_turn(a)
   self.money_per_turn = self.money_per_turn + a
 end
 
+function Money:add_money(money)
+  self.total_money = self.total_money + money
+end
+
 function Money:get_current_money()
+  print (self.total_money)
   return self.total_money
+end
+
+function Money:draw(pos_x, pos_y)
+  love.graphics.print(self.total_money, pos_x, pos_y, r, sx, sy, ox, oy, kx, ky)
 end
 
 return Money

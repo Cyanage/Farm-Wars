@@ -76,6 +76,8 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
 
         game.setFence(clickedTile.x, clickedTile.y)  -- Add a fence to the current tile.
         game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile small again.
+        --money:add_money(-80)
+        print (money:get_current_money())
 
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
         print "clicked end turn button"
