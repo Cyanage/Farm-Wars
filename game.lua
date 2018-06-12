@@ -1,10 +1,12 @@
 Game = {}
 
+-- Globals
+gGameDone = false  --whether the game is done or not
+gResults = { winner="winner", loser="loser" }  -- Holds the name of the winner and loser
+
 function Game.load()
     map.load()  -- Load the map.
     turnManager.load()
-    gameDone = false  --whether the game is done or not
-    finalText = {"w", "l"}  --stores the name of the winner and loser
 end
 
 -- This function tries to make a tile into a fence.
@@ -22,22 +24,22 @@ function Game.setFence(x_index, y_index)
 end
 
 -- This function tries to make a tile into a fence.
-function Game.setMassive(x_index, y_index, is_massive)
-    tile_x = x_index + 1
-    tile_y = y_index + 1
+function Game.setSelectedTile(xIndex, yIndex, isSelected)
+    xTile = xIndex + 1
+    yTile = yIndex + 1
 
-    if is_massive == true then
-        if tile_x > 0 and tile_x <= MAX_TILES.x and tile_y > 0 and tile_y <= MAX_TILES.y then
-            if map.isMassive(tile_x, tile_y) == false then
-                map.setTile(tile_x, tile_y, map.getTile(tile_x, tile_y) + 60)  -- Make tile a fence.
+    if isSelected == true then
+        if xTile > 0 and xTile <= MAX_TILES.x and yTile > 0 and yTile <= MAX_TILES.y then
+            if map.isSelected(xTile, yTile) == false then
+                map.setTile(xTile, yTile, map.getTile(xTile, yTile) + 60)  -- Make tile a fence.
             else
                 print("ATTEMPT TO SET A TILE TO BE THE SAME TILE AS ITSELF.")
             end
         end
     else
-        if tile_x > 0 and tile_x <= MAX_TILES.x and tile_y > 0 and tile_y <= MAX_TILES.y then
-            if map.isMassive(tile_x, tile_y) == true then
-                map.setTile(tile_x, tile_y, map.getTile(tile_x, tile_y) - 60)  -- Make tile a fence.
+        if xTile > 0 and xTile <= MAX_TILES.x and yTile > 0 and yTile <= MAX_TILES.y then
+            if map.isSelected(xTile, yTile) == true then
+                map.setTile(xTile, yTile, map.getTile(xTile, yTile) - 60)  -- Make tile a fence.
             else
                 print("ATTEMPT TO SET A TILE TO BE THE SAME TILE AS ITSELF.")
             end
@@ -60,17 +62,16 @@ function Game.draw()
     end
 end
 
-function Game.update()
-    turnManager.update()
+function Game.update(dt)
+    turnManager.update(dt)
     ui.update()
 end
 
---when one player wins this is called
-function Game.finish(winner, loser) -- gets name of winner and loser
-
-  gameDone = true
-  finalText[1] = winner --gets the name of the winner
-  finalText[2] = loser  --gets the name of the loser
+-- When one player wins this is called
+function Game.finish(winner, loser)  -- This function gets the name of the winner and loser.
+    gGameDone = true
+    gResults.winner = winner  -- Gets the name of the winner
+    gResults.loser = loser  -- Gets the name of the loser
 end
 
 return Game

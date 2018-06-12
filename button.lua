@@ -43,12 +43,12 @@ end
 
 -- TODO: set text colour.
 function Button:setTextColour(colour)
-
+    --pass
 end
 
 -- TODO: set background colour.
 function Button:setBackgroundColour(colour)
-
+    --pass
 end
 
 -- Check if button is being clicked when function is called.

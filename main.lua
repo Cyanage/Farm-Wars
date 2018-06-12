@@ -1,5 +1,5 @@
 -- Global and Constant variables.
-    MAX_TILES = {x=16, y=8}  -- The prefered amount of tiles to be drawn.
+MAX_TILES = {x=16, y=8}  -- The prefered amount of tiles to be drawn.
 
 function love.load()
     -- Set up the window.
@@ -36,6 +36,7 @@ function love.load()
     fence_bottom = love.graphics.newImage("resc/images/Fence_Bottom.png")
     fence_single = love.graphics.newImage("resc/images/Fence_Single_v2.png")
     barn = love.graphics.newImage("resc/images/Barn.png")
+    selected = love.graphics.newImage("resc/images/image_pointers.png")
 
     grass = love.graphics.newImage("resc/images/GrassVer2.png")
     wheat1 = love.graphics.newImage("resc/images/Wheat1.png")
@@ -106,7 +107,7 @@ function love.draw()
     end
   end
 
-function love.update()
+function love.update(dt)
     --adds current money per turn every second
     player_money:update()
     --print (player_money:get_current_money())
@@ -121,6 +122,6 @@ function love.update()
     if menu.isActive() == true then
         menu.update()
     else
-        game.update()
+        game.update(dt)
     end
 end

@@ -17,24 +17,34 @@ function UI.init()
 
     buy_fence_pressed_img = love.graphics.newImage("resc/images/buy_fence_pressed.png")
     buy_fence_unpressed_img = love.graphics.newImage("resc/images/buy_fence_unpressed.png")
+
+    end_turn_pressed_img = love.graphics.newImage("resc/images/end_turn_pressed.png")
+    end_turn_unpressed_img = love.graphics.newImage("resc/images/end_turn_unpressed.png")
 end
 
 buy_fence_is_pressed = false
 buy_fence_x = 0
 buy_fence_y = 0
 
+end_turn_is_pressed = false
+end_turn_x = 0
+end_turn_y = 0
+
 function UI.draw()
     local x_pos = pos_centered.x
     local y_pos = pos_centered.y - tile_size
 
+    -- Check who's turn it is and change the turn image to that colour.
     if TurnManager.currentPlayerTurn == RED then
         turn_img = red_turn_img
     else
         turn_img = blue_turn_img
     end
 
+    -- This is the image that shows who's turn it is.
     love.graphics.draw(turn_img, x_pos, y_pos, 0, scale_factor, scale_factor)
 
+    -- Draw the menu here.
     if drawMenu == true then
         menuPosY = pos_centered.y  -- The y position of the menu is allways going to be the same.
         if menuPosition == LEFT then
@@ -48,7 +58,7 @@ function UI.draw()
         -- Draw the menu.
         love.graphics.draw(menu_pane_img, menuPosX, menuPosY, 0, direction_mod * scale_factor, scale_factor)
 
-        -- Calculate the position of the button.
+        -- Calculate the position of the buy fence button.
         if menuPosition == LEFT then
             buy_fence_x = menuPosX - 93*4*scale_factor
             buy_fence_y = menuPosY + 6*4*scale_factor
@@ -57,16 +67,32 @@ function UI.draw()
             buy_fence_y = menuPosY + 6*4*scale_factor
         end
 
-        -- Draw the button.
+        -- Draw the buy fence button.
         if buy_fence_is_pressed == false then
             love.graphics.draw(buy_fence_unpressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
         else
             love.graphics.draw(buy_fence_pressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
         end
+
+        -- Calculate the position of the end turn button.
+        if menuPosition == LEFT then
+            end_turn_x = menuPosX - 36*4*scale_factor
+            end_turn_y = menuPosY + 87*4*scale_factor
+        else
+            end_turn_x = menuPosX + 9*4*scale_factor
+            end_turn_y = menuPosY + 87*4*scale_factor
+        end
+
+        -- Draw the end turn button.
+        if end_turn_is_pressed == false then
+            love.graphics.draw(end_turn_unpressed_img, end_turn_x, end_turn_y, 0, scale_factor, scale_factor)
+        else
+            love.graphics.draw(end_turn_pressed_img, end_turn_x, end_turn_y, 0, scale_factor, scale_factor)
+        end
     end
 end
 
--- This function starts drawing the menu.
+-- This function starts drawing the menu on a certain side.
 function UI.openMenu(side)
     drawMenu = true
     menuPosition = side
