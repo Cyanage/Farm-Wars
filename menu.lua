@@ -18,12 +18,12 @@ end
 
 function Menu.init()
     -- Create the background image and set the scale_factor to the screen.
-    bg = love.graphics.newImage("resc/images/mountains.png")
+    bg = love.graphics.newImage("resc/images/nonPixelArt/mountains.png")
     screen_scale = love.graphics.getWidth() / bg:getWidth()
 
     -- Init images.
-    start_img = love.graphics.newImage("resc/images/Start.png")
-    info = love.graphics.newImage("resc/images/Info.png")
+    start_img = love.graphics.newImage("resc/images/nonPixelArt/Start.png")
+    info = love.graphics.newImage("resc/images/nonPixelArt/Info.png")
 
     xPosUi = love.graphics.getWidth()/2 - ( start_img:getWidth()/3 * screen_scale )
 

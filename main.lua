@@ -31,23 +31,20 @@ function love.load()
     initScreen()  -- Initialize the tilemap and screen size.
 
     -- Load Images:
-    fence_top = love.graphics.newImage("resc/images/Fence_Top.png")
-    fence_mid = love.graphics.newImage("resc/images/Fence_Mid.png")
-    fence_bottom = love.graphics.newImage("resc/images/Fence_Bottom.png")
-    fence_single = love.graphics.newImage("resc/images/Fence_Single_v2.png")
+    fence_single = love.graphics.newImage("resc/images/tiles/Fence_Single_v2.png")
     barn = love.graphics.newImage("resc/images/Barn.png")
     selected = love.graphics.newImage("resc/images/image_pointers.png")
 
-    grass = love.graphics.newImage("resc/images/GrassVer2.png")
-    wheat1 = love.graphics.newImage("resc/images/Wheat1.png")
-    wheat2 = love.graphics.newImage("resc/images/Wheat2.png")
-    wheat3 = love.graphics.newImage("resc/images/Wheat3.png")
-    destroyed = love.graphics.newImage("resc/images/Destroyed.png")
-    tree = love.graphics.newImage("resc/images/Apple_Tree.png")
-    tree_used = love.graphics.newImage("resc/images/Picked_Apple_Tree.png")
+    grass = love.graphics.newImage("resc/images/tiles/GrassVer2.png")
+    wheat1 = love.graphics.newImage("resc/images/tiles/Wheat1.png")
+    wheat2 = love.graphics.newImage("resc/images/tiles/Wheat2.png")
+    wheat3 = love.graphics.newImage("resc/images/tiles/Wheat3.png")
+    destroyed = love.graphics.newImage("resc/images/tiles/Destroyed.png")
+    tree = love.graphics.newImage("resc/images/tiles/Apple_Tree.png")
+    tree_used = love.graphics.newImage("resc/images/tiles/Picked_Apple_Tree.png")
 
     -- Background Image for the game.
-    bg_game = love.graphics.newImage("resc/images/Background.png")
+    bg_game = love.graphics.newImage("resc/images/nonPixelArt/Background.png")
     bg_scale = love.graphics.getWidth() / bg_game:getWidth()
 
     -- Init modules
@@ -97,13 +94,13 @@ function love.draw()
     end
 
     if enemy_money:get_current_money() >= 100 or enemy_money:get_current_money() <= -100 and has_gone_up == false then
-      enemy_font_x = enemy_font_x + 40
-      has_gone_up = true
+        enemy_font_x = enemy_font_x + 40
+        has_gone_up = true
     end
 
     if enemy_money:get_current_money() < 0  and has_gone_down == false then
-      enemy_font_x = enemy_font_x + 20
-      has_gone_down = true
+        enemy_font_x = enemy_font_x + 20
+        has_gone_down = true
     end
   end
 
