@@ -21,9 +21,14 @@ end
 
 -- Player colour is a bool
 function TurnManager.setPlayerTurn(playerColour)
+    UI.closeMenu()  -- Close the menu before the units moves.
+    TurnManager.currentAction = 0  -- Set next player's action (select a tile action)
+
     if playerColour == RED then
+        TurnManager.currentPlayerTurn = BLUE
         --TurnManager.inSetup = true
     else
+        TurnManager.currentPlayerTurn = RED
         --TurnManager.inSetup = true
     end
 end
@@ -65,10 +70,16 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
     buy_fence_height = buy_fence_unpressed_img:getHeight() * scale_factor
     end_turn_width = end_turn_unpressed_img:getWidth() * scale_factor
     end_turn_height = end_turn_unpressed_img:getHeight() * scale_factor
+    claim_tile_width = claim_tile_unpressed_img:getWidth() * scale_factor
+    claim_tile_height = claim_tile_unpressed_img:getHeight() * scale_factor
+
+    claim_tile_empty_width = 56 * scale_factor
+    claim_tile_empty_height = claim_tile_empty_width
 
     -- Change all button images to be unpressed.
     buy_fence_is_pressed = false
     end_turn_is_pressed = false
+    claim_tile_is_pressed = false
 
     -- Check if the mouse is over the button.
     if mouse_x_pos > buy_fence_x and mouse_x_pos < buy_fence_x + buy_fence_width and mouse_y_pos > buy_fence_y and mouse_y_pos < buy_fence_y + buy_fence_height then
@@ -86,6 +97,8 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
 
         -- Wait 1 second until the ending of the Current turn.  (menu is also closed)
         endTurnWaitTime = 0.25
+    elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width and mouse_y_pos > claim_tile_y + claim_tile_empty_heihgt) then
+        print "clicked claim tile button"
     else
         print " no clicked button !!!!!!!!"
         --something
@@ -142,8 +155,6 @@ local function _checkMenuClick()
         mouse_x_pos = love.mouse.getX()
         mouse_y_pos = love.mouse.getY()
 
-        print "d"
-
         _checkButtonDownActions(mouse_x_pos, mouse_y_pos)  -- Check if the mouse is over the button.
 
         doAction = false
@@ -151,8 +162,6 @@ local function _checkMenuClick()
     elseif doAction == true then
         mouse_x_pos = love.mouse.getX()
         mouse_y_pos = love.mouse.getY()
-
-        print "u"
 
         _checkButtonUpActions(mouse_x_pos, mouse_y_pos)  -- Check if the mouse is over the button.
 
@@ -167,10 +176,7 @@ function TurnManager.update(dt)
 
         -- This is called once per wait.
         if endTurnWaitTime <= 0 then
-            UI.closeMenu()
-            TurnManager.currentAction = 0
-
-            TurnManager.currentPlayerTurn = not TurnManager.currentPlayerTurn  -- Set to the other player's turn
+            TurnManager.setPlayerTurn(not TurnManager.currentPlayerTurn)  -- Set to the other player's turn
         end
     else
         if TurnManager.currentPlayerTurn == RED then

@@ -20,6 +20,9 @@ function UI.init()
 
     end_turn_pressed_img = love.graphics.newImage("resc/images/end_turn_pressed.png")
     end_turn_unpressed_img = love.graphics.newImage("resc/images/end_turn_unpressed.png")
+
+    claim_tile_pressed_img = love.graphics.newImage("resc/images/claim_tile_pressed.png")
+    claim_tile_unpressed_img = love.graphics.newImage("resc/images/claim_tile_unpressed.png")
 end
 
 buy_fence_is_pressed = false
@@ -29,6 +32,10 @@ buy_fence_y = 0
 end_turn_is_pressed = false
 end_turn_x = 0
 end_turn_y = 0
+
+claim_tile_is_pressed = false
+claim_tile_x = 0
+claim_tile_y = 0
 
 function UI.draw()
     local x_pos = pos_centered.x
@@ -60,7 +67,7 @@ function UI.draw()
 
         -- Calculate the position of the buy fence button.
         if menuPosition == LEFT then
-            buy_fence_x = menuPosX - 93*4*scale_factor
+            buy_fence_x = menuPosX - 50*4*scale_factor
             buy_fence_y = menuPosY + 6*4*scale_factor
         else
             buy_fence_x = menuPosX + 51*4*scale_factor
@@ -88,6 +95,22 @@ function UI.draw()
             love.graphics.draw(end_turn_unpressed_img, end_turn_x, end_turn_y, 0, scale_factor, scale_factor)
         else
             love.graphics.draw(end_turn_pressed_img, end_turn_x, end_turn_y, 0, scale_factor, scale_factor)
+        end
+
+        -- Calculate the position of the end turn button.
+        if menuPosition == LEFT then
+            claim_tile_x = menuPosX - 93*4*scale_factor
+            claim_tile_y = menuPosY + 6*4*scale_factor
+        else
+            claim_tile_x = menuPosX + 9*4*scale_factor
+            claim_tile_y = menuPosY + 6*4*scale_factor
+        end
+
+        -- Draw the end turn button.
+        if claim_tile_is_pressed == false then
+            love.graphics.draw(claim_tile_unpressed_img, claim_tile_x, claim_tile_y, 0, scale_factor, scale_factor)
+        else
+            love.graphics.draw(claim_tile_pressed_img, claim_tile_x, claim_tile_y, 0, scale_factor, scale_factor)
         end
     end
 end
