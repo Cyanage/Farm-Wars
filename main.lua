@@ -19,7 +19,10 @@ function love.load()
 
     player_money = money:new()
     enemy_money = money:new()
-    enemy_font_x = 350
+
+    font_y = 63
+    player_font_x = 280
+    enemy_font_x = 1180
 
     --so that when enemy moey goes up, it doesn't just fly of to left
     has_gone_up = false
@@ -93,29 +96,26 @@ function love.draw()
         game.draw()
     end
 
-    player_money:draw(100, 54)
-    enemy_money:draw(enemy_font_x, 54)
+    player_money:draw(player_font_x, font_y)
+    enemy_money:draw(enemy_font_x, font_y)
 
-    if enemy_money:get_current_money() >= 100 or enemy_money:get_current_money() <= -100 and has_gone_up == false then
-        enemy_font_x = enemy_font_x + 40
-        has_gone_up = true
-    end
-
-    if enemy_money:get_current_money() < 0  and has_gone_down == false then
-        enemy_font_x = enemy_font_x + 20
-        has_gone_down = true
-    end
   end
 
 function love.update(dt)
-    --adds current money per turn every second
-    player_money:update()
-    --print (player_money:get_current_money())
-
-    enemy_money:update()
 
     if love.keyboard.isDown("a") then
       game.finish("Bill Cosby", "You")
+    end
+
+    if enemy_money:get_current_money() >= 100 and has_gone_up == false or enemy_money:get_current_money() <= -100 and has_gone_up == false then
+        enemy_font_x = enemy_font_x - 40
+        has_gone_up = true
+        print (tostring(has_gone_up))
+    end
+
+    if enemy_money:get_current_money() < 0  and has_gone_down == false then
+        enemy_font_x = enemy_font_x - 20
+        has_gone_down = true
     end
 
     -- Check what scene is active.
