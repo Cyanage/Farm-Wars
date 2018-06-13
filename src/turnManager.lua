@@ -7,6 +7,11 @@ TurnManager.inSetup = false
 TurnManager.currentAction = 0
 TurnManager.currentPlayerTurn = RED
 
+money = require "src/objects/money" --so that money can go up each turn
+
+player_money = money:new()
+enemy_money = money:new()
+
 local endTurnWaitTime = 0  -- The time to wait before doing any new logic / ending the turn.
 local doAction = false
 local mouseUp = false
@@ -107,6 +112,7 @@ local function _checkButtonDownActions(mouse_x_pos, mouse_y_pos)
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
         print "clicked end turn button down"
         end_turn_is_pressed = true  -- Change the button image to being pressed.
+        player_money:update()
 
     else
         print "no clicked button down !!!!!!!!"
