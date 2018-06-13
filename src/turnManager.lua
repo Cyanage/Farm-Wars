@@ -32,9 +32,9 @@ function TurnManager.setPlayerTurn()
 
 
     if TurnManager.currentPlayerTurn == RED then
-          player_money:update()
-    elseif TurnManager.currentPlayerTurn == BLUE then
           enemy_money:update()
+    elseif TurnManager.currentPlayerTurn == BLUE then
+          player_money:update()
     end
 
     TurnManager.currentPlayerTurn = not TurnManager.currentPlayerTurn
@@ -105,7 +105,7 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
 
         -- Wait 1 second until the ending of the Current turn.  (menu is also closed)
         endTurnWaitTime = 0.25
-    elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width and mouse_y_pos > claim_tile_y + claim_tile_empty_heihgt) then
+    elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width and mouse_y_pos > claim_tile_y + claim_tile_empty_height) then
         print "clicked claim tile button"
     else
         print " no clicked button !!!!!!!!"
