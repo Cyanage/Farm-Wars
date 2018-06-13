@@ -17,7 +17,8 @@ function love.load()
     font = love.graphics.newFont(64)
     love.graphics.setFont(font)
 
-
+    player_money = money:new()
+    enemy_money = money:new()
     enemy_font_x = 350
 
     --so that when enemy moey goes up, it doesn't just fly of to left
@@ -107,6 +108,11 @@ function love.draw()
   end
 
 function love.update(dt)
+    --adds current money per turn every second
+    player_money:update()
+    --print (player_money:get_current_money())
+
+    enemy_money:update()
 
     if love.keyboard.isDown("a") then
       game.finish("Bill Cosby", "You")
