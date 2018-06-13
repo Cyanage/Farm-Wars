@@ -108,11 +108,6 @@ function love.draw()
   end
 
 function love.update(dt)
-    --adds current money per turn every second
-    player_money:update()
-    --print (player_money:get_current_money())
-
-    enemy_money:update()
 
     if love.keyboard.isDown("a") then
       game.finish("Bill Cosby", "You")

@@ -25,17 +25,20 @@ function TurnManager.load()
 end
 
 -- Player colour is a bool
-function TurnManager.setPlayerTurn(playerColour)
+function TurnManager.setPlayerTurn()
     UI.closeMenu()  -- Close the menu before the units moves.
+    --TurnManager.inSetup = true
     TurnManager.currentAction = 0  -- Set next player's action (select a tile action)
 
-    if playerColour == RED then
-        TurnManager.currentPlayerTurn = BLUE
-        --TurnManager.inSetup = true
-    else
-        TurnManager.currentPlayerTurn = RED
-        --TurnManager.inSetup = true
+
+    if TurnManager.currentPlayerTurn == RED then
+          player_money:update()
+    elseif TurnManager.currentPlayerTurn == BLUE then
+          enemy_money:update()
     end
+
+    TurnManager.currentPlayerTurn = not TurnManager.currentPlayerTurn
+
 end
 
 local function _checkTileClick()
@@ -125,7 +128,6 @@ local function _checkButtonDownActions(mouse_x_pos, mouse_y_pos)
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
         print "clicked end turn button down"
         end_turn_is_pressed = true  -- Change the button image to being pressed.
-        player_money:update()
 
     else
         print "no clicked button down !!!!!!!!"
@@ -182,7 +184,7 @@ function TurnManager.update(dt)
 
         -- This is called once per wait.
         if endTurnWaitTime <= 0 then
-            TurnManager.setPlayerTurn(not TurnManager.currentPlayerTurn)  -- Set to the other player's turn
+            TurnManager.setPlayerTurn()  -- Set to the other player's turn
         end
     else
         if TurnManager.currentPlayerTurn == RED then
