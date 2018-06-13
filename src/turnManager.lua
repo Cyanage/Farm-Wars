@@ -102,7 +102,7 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
 
         -- Wait 1 second until the ending of the Current turn.  (menu is also closed)
         endTurnWaitTime = 0.25
-    elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width and mouse_y_pos > claim_tile_y + claim_tile_empty_heihgt) then
+    elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width or mouse_y_pos > claim_tile_y + claim_tile_empty_height) then
         print "clicked claim tile button"
     else
         print " no clicked button !!!!!!!!"
@@ -128,7 +128,7 @@ local function _checkButtonDownActions(mouse_x_pos, mouse_y_pos)
         player_money:update()
 
     else
-        print "no clicked button down !!!!!!!!"
+        --print "no clicked button down !!!!!!!!"
     end
 end
 
