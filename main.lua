@@ -24,7 +24,7 @@ function love.load()
     player_font_x = 280
     enemy_font_x = 1180
 
-    --so that when enemy moey goes up, it doesn't just fly of to left
+    --so that when enemy moey goes up, it doesn't just fly off to left
     has_gone_up = false
     has_gone_down = false
 
