@@ -17,7 +17,7 @@ function love.load()
     font = love.graphics.newFont(64)
     love.graphics.setFont(font)
 
-    player_money = money:new()
+    player_money = money:new(50)
     enemy_money = money:new()
 
     font_y = 63

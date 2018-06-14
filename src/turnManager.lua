@@ -36,9 +36,9 @@ function TurnManager.setPlayerTurn()
 
 
     if TurnManager.currentPlayerTurn == RED then
-          enemy_money:update()
-    elseif TurnManager.currentPlayerTurn == BLUE then
           player_money:update()
+    elseif TurnManager.currentPlayerTurn == BLUE then
+          enemy_money:update()
     end
 
     TurnManager.currentPlayerTurn = not TurnManager.currentPlayerTurn
@@ -98,11 +98,11 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
 
       --finds out which player bought the fence
         if TurnManager.currentPlayerTurn == RED then
-              enemy_money:add_money_per_turn(-5) --adds -5 money per turn
-              print ("enemy bought a fence")
-        elseif TurnManager.currentPlayerTurn == BLUE then
               player_money:add_money_per_turn(-5) --adds -5 money per turn
               print ("player bought a fence")
+        elseif TurnManager.currentPlayerTurn == BLUE then
+              enemy_money:add_money_per_turn(-5) --adds -5 money per turn
+              print ("enemy bought a fence")
         end
 
         print "clicked fence button"
