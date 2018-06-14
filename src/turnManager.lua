@@ -12,6 +12,10 @@ money = require "src/objects/money"  -- So that money can go up each turn
 player_money = money:new()
 enemy_money = money:new()
 
+buy_fence_is_pressed = false
+end_turn_is_pressed = false
+claim_tile_is_pressed = false
+
 local endTurnWaitTime = 0  -- The time to wait before doing any new logic / ending the turn.
 local doAction = false
 local mouseUp = false
@@ -31,9 +35,9 @@ function TurnManager.setPlayerTurn()
     TurnManager.currentAction = 0  -- Set next player's action (select a tile action)
 
     if TurnManager.currentPlayerTurn == RED then
-          enemy_money:update()
-    elseif TurnManager.currentPlayerTurn == BLUE then
           player_money:update()
+    elseif TurnManager.currentPlayerTurn == BLUE then
+          enemy_money:update()
     end
 
     TurnManager.currentPlayerTurn = not TurnManager.currentPlayerTurn
@@ -92,16 +96,27 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
 
     -- Check if the mouse is over the button.
     if mouse_x_pos > buy_fence_x and mouse_x_pos < buy_fence_x + buy_fence_width and mouse_y_pos > buy_fence_y and mouse_y_pos < buy_fence_y + buy_fence_height then
+
+      --finds out which player bought the fence
+        if TurnManager.currentPlayerTurn == RED then
+              player_money:add_money_per_turn(-5) --adds -5 money per turn
+              print ("player bought a fence")
+        elseif TurnManager.currentPlayerTurn == BLUE then
+              enemy_money:add_money_per_turn(-5) --adds -5 money per turn
+              print ("enemy bought a fence")
+        end
+
         print "clicked fence button"
         if map.isSelected(clickedTile.x+1, clickedTile.y+1) == true then
             if map.isTileFence(clickedTile.x+1, clickedTile.y+1) == false then
                 game.setFence(clickedTile.x, clickedTile.y)  -- Add a fence to the current tile.
                 game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+                --money:add_money(-80)
+                print (money:get_current_money())
             end
         end
 
-        --money:add_money(-80)
-        print (money:get_current_money())
+
 
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
         print "clicked end turn button"

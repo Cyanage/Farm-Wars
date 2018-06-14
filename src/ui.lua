@@ -4,12 +4,13 @@ LEFT = false
 RIGHT = true
 
 -- Menu controlling variables.
+menuPosition = LEFT
 local drawMenu = false
 local menuIsMinimized = false
-menuPosition = LEFT
 
 -- load images
 function UI.init()
+
     red_turn_img = love.graphics.newImage("resc/images/red_turn_bar.png")
     blue_turn_img = love.graphics.newImage("resc/images/blue_turn_bar.png")
 
@@ -23,6 +24,7 @@ function UI.init()
 
     claim_tile_pressed_img = love.graphics.newImage("resc/images/claim_tile_pressed.png")
     claim_tile_unpressed_img = love.graphics.newImage("resc/images/claim_tile_unpressed.png")
+
 end
 
 buy_fence_is_pressed = false
@@ -79,6 +81,7 @@ function UI.draw()
             love.graphics.draw(buy_fence_unpressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
         else
             love.graphics.draw(buy_fence_pressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
+
         end
 
         -- Calculate the position of the end turn button.

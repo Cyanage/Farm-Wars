@@ -21,14 +21,14 @@ function love.load()
     font = love.graphics.newFont(64)
     love.graphics.setFont(font)
 
-    player_money = money:new()
+    player_money = money:new(50)
     enemy_money = money:new()
 
     font_y = 63
     player_font_x = 280
     enemy_font_x = 1180
 
-    --so that when enemy moey goes up, it doesn't just fly of to left
+    --so that when enemy moey goes up, it doesn't just fly off to left
     has_gone_up = false
     has_gone_down = false
 
