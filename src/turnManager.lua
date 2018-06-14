@@ -7,7 +7,7 @@ TurnManager.inSetup = false
 TurnManager.currentAction = 0
 TurnManager.currentPlayerTurn = RED
 
-money = require "src/objects/money" --so that money can go up each turn
+money = require "src/objects/money"  -- So that money can go up each turn
 
 player_money = money:new()
 enemy_money = money:new()
@@ -29,7 +29,6 @@ function TurnManager.setPlayerTurn()
     UI.closeMenu()  -- Close the menu before the units moves.
     --TurnManager.inSetup = true
     TurnManager.currentAction = 0  -- Set next player's action (select a tile action)
-
 
     if TurnManager.currentPlayerTurn == RED then
           enemy_money:update()
@@ -89,24 +88,36 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
     end_turn_is_pressed = false
     claim_tile_is_pressed = false
 
+    print (map.getTile(clickedTile.x+1, clickedTile.y+1), "THISSS!!!!!!")
+
     -- Check if the mouse is over the button.
     if mouse_x_pos > buy_fence_x and mouse_x_pos < buy_fence_x + buy_fence_width and mouse_y_pos > buy_fence_y and mouse_y_pos < buy_fence_y + buy_fence_height then
         print "clicked fence button"
+        if map.isSelected(clickedTile.x+1, clickedTile.y+1) == true then
+            if map.isTileFence(clickedTile.x+1, clickedTile.y+1) == false then
+                game.setFence(clickedTile.x, clickedTile.y)  -- Add a fence to the current tile.
+                game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+            end
+        end
 
-        game.setFence(clickedTile.x, clickedTile.y)  -- Add a fence to the current tile.
-        game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile small again.
         --money:add_money(-80)
         print (money:get_current_money())
 
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
         print "clicked end turn button"
 
-        game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile small again.
+        game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
 
-        -- Wait 1 second until the ending of the Current turn.  (menu is also closed)
+        -- Wait 1/4 of a second until the ending of the current turn.  (menu is also closed on turn end)
         endTurnWaitTime = 0.25
     elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width or mouse_y_pos > claim_tile_y + claim_tile_empty_height) then
         print "clicked claim tile button"
+        if map.isSelected(clickedTile.x+1, clickedTile.y+1) == true then
+            if map.isColour(RED, clickedTile.x+1, clickedTile.y+1) == false and map.isColour(BLUE, clickedTile.x+1, clickedTile.y+1) == false then
+                map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) + 20 - 10*(bool_to_number(TurnManager.currentPlayerTurn)) )
+                game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+            end
+        end
     else
         print " no clicked button !!!!!!!!"
         --something
@@ -119,6 +130,11 @@ local function _checkButtonDownActions(mouse_x_pos, mouse_y_pos)
     buy_fence_height = buy_fence_unpressed_img:getHeight() * scale_factor
     end_turn_width = end_turn_unpressed_img:getWidth() * scale_factor
     end_turn_height = end_turn_unpressed_img:getHeight() * scale_factor
+    claim_tile_width = claim_tile_unpressed_img:getWidth() * scale_factor
+    claim_tile_height = claim_tile_unpressed_img:getHeight() * scale_factor
+
+    claim_tile_empty_width = 56 * scale_factor
+    claim_tile_empty_height = claim_tile_empty_width
 
     -- Check if the mouse is over the button.
     if mouse_x_pos > buy_fence_x and mouse_x_pos < buy_fence_x + buy_fence_width and mouse_y_pos > buy_fence_y and mouse_y_pos < buy_fence_y + buy_fence_height then
@@ -128,6 +144,9 @@ local function _checkButtonDownActions(mouse_x_pos, mouse_y_pos)
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
         print "clicked end turn button down"
         end_turn_is_pressed = true  -- Change the button image to being pressed.
+    elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width or mouse_y_pos > claim_tile_y + claim_tile_empty_height) then
+        print "clicked claim tile button down"
+        claim_tile_is_pressed = true
 
     else
         --print "no clicked button down !!!!!!!!"

@@ -1,6 +1,10 @@
 -- Global and Constant variables.
 MAX_TILES = {x=16, y=8}  -- The prefered amount of tiles to be drawn.
 
+function bool_to_number(bool)
+    return bool and 1 or 0
+end
+
 function love.load()
     -- Set up the window.
     love.window.setTitle("Farm Wars")
@@ -37,6 +41,8 @@ function love.load()
     fence_single = love.graphics.newImage("resc/images/tiles/Fence_Single_v2.png")
     barn = love.graphics.newImage("resc/images/Barn.png")
     selected = love.graphics.newImage("resc/images/image_pointers.png")
+    blue_claimed = love.graphics.newImage("resc/images/tiles/blue_selected.png")
+    red_claimed = love.graphics.newImage("resc/images/tiles/red_selected.png")
 
     grass = love.graphics.newImage("resc/images/tiles/GrassVer2.png")
     wheat1 = love.graphics.newImage("resc/images/tiles/Wheat1.png")

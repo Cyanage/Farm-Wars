@@ -23,7 +23,7 @@ function Game.setFence(x_index, y_index)
     end
 end
 
--- This function tries to make a tile into a fence.
+-- This function tries to make a tile to be selected.
 function Game.setSelectedTile(xIndex, yIndex, isSelected)
     xTile = xIndex + 1
     yTile = yIndex + 1

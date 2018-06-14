@@ -55,6 +55,20 @@ function Map.isTileFence(x, y)
 end
 
 -- This function returns true if the tile has a fence on it.
+function Map.isColour(colour, x, y)
+    if colour == RED then
+        if map_matrix[x][y] >= 10 and map_matrix[x][y] < 20 or map_matrix[x][y] >= 40 and map_matrix[x][y] < 50 or map_matrix[x][y] >= 40+30 and map_matrix[x][y] < 50+30 or map_matrix[x][y] >= 40+60 and map_matrix[x][y] < 50+60 then
+            return true
+        end
+    else
+        if map_matrix[x][y] >= 20 and map_matrix[x][y] < 30 or map_matrix[x][y] >= 50 and map_matrix[x][y] < 60 or map_matrix[x][y] >= 50+30 and map_matrix[x][y] < 60+30 or map_matrix[x][y] >= 50+60 and map_matrix[x][y] < 60+60 then
+            return true
+        end
+    end
+    return false
+end
+
+-- This function returns true if the tile has a fence on it.
 function Map.isSelected(x, y)
     if map_matrix[x][y] >= 60 then
         return true
@@ -65,21 +79,14 @@ end
 
 -- This function draws the map to the screen.
 local function drawMap()
+    love.graphics.setColor(1, 1, 1, 1)  -- Set a white colour mod.
+
     -- Loops through every column.
     for x, p in ipairs(map_matrix) do
         for y, p2 in ipairs(map_matrix[x]) do
             -- Find the position for the tile.
             local tile_x = ( (x - 1) * tile_size ) + pos_centered.x
             local tile_y = ( (y - 1) * tile_size ) + pos_centered.y
-
-            -- Check if tile is tinted.
-            if map_matrix[x][y] >= 10 and map_matrix[x][y] < 20 or map_matrix[x][y] >= 40 and map_matrix[x][y] < 50 then
-                love.graphics.setColor(1, 0.4, 0.4, 1)  -- Red colour mod
-            elseif map_matrix[x][y] >= 20 and map_matrix[x][y] < 30 or map_matrix[x][y] >= 50 and map_matrix[x][y] < 60 then
-                love.graphics.setColor(0.4, 0.4, 1, 1)  -- Blue colour mod
-            else
-                love.graphics.setColor(1, 1, 1, 1)  -- White colour mod
-            end
 
             -- Draw tile at x,y  ('% 10' means that 16 and 6 are considered the same tile, tree_used)
             if map_matrix[x][y] % 10 == 0 then
@@ -100,6 +107,13 @@ local function drawMap()
                 love.graphics.draw(grass, tile_x, tile_y, 0, scale_factor, scale_factor)
                 love.graphics.setColor(1, 1, 1, 1)  -- Tree has a white colour mod (normal)
                 love.graphics.draw(tree_used, tile_x, tile_y, 0, scale_factor, scale_factor)
+            end
+
+            -- Check if tile is claimed.
+            if map_matrix[x][y] >= 10 and map_matrix[x][y] < 20 or map_matrix[x][y] >= 40 and map_matrix[x][y] < 50 or map_matrix[x][y] >= 40+30 and map_matrix[x][y] < 50+30 or map_matrix[x][y] >= 40+60 and map_matrix[x][y] < 50+60 then
+                love.graphics.draw(red_claimed, tile_x, tile_y, 0, scale_factor, scale_factor)
+            elseif map_matrix[x][y] >= 20 and map_matrix[x][y] < 30 or map_matrix[x][y] >= 50 and map_matrix[x][y] < 60 or map_matrix[x][y] >= 50+30 and map_matrix[x][y] < 60+30 or map_matrix[x][y] >= 50+60 and map_matrix[x][y] < 60+60 then
+                love.graphics.draw(blue_claimed, tile_x, tile_y, 0, scale_factor, scale_factor)
             end
 
             -- Check if a fence needs to be drawn over the tile.
