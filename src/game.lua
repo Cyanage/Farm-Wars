@@ -18,7 +18,7 @@ function Game.setFence(x_index, y_index)
         if map.isTileFence(tile_x, tile_y) == false then
             map.setTile(tile_x, tile_y, map.getTile(tile_x, tile_y) + 30)  -- Make tile a fence.
         else
-            print("SOMeTHING TRIED TO SET A TILE THAT WAS A FENCE WAS TO BE A FENCE.")
+            print("SOMETHING TRIED TO SET A TILE THAT WAS A FENCE WAS TO BE A FENCE.")
         end
     end
 end
@@ -58,7 +58,7 @@ function Game.draw()
 
     --displays that the winner has beaten the loser overtop of map and ui
     if gGameDone == true then
-      love.graphics.print(gResults.winner .. " has defeated " .. gResults.loser, 100, 100)
+      love.graphics.print(gResults.winner .. " has defeated " .. gResults.loser, gPosition.x, gPosition.y)
     end
 end
 

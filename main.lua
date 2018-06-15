@@ -113,6 +113,12 @@ function love.update(dt)
       game.finish("Bill Cosby", "You")
     end
 
+    if player_money:get_current_money() <= 0 then
+      game.finish("Team Blue", "Team Red")
+    elseif  enemy_money:get_current_money() <= 0 then
+      game.finish("Team Red", "Team Blue")
+    end
+
     if enemy_money:get_current_money() >= 100 and has_gone_up == false or enemy_money:get_current_money() <= -100 and has_gone_up == false then
         enemy_font_x = enemy_font_x - 40
         has_gone_up = true

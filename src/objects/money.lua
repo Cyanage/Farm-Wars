@@ -2,6 +2,7 @@ Money = {}
 
 -- This function makes a new instance of this object.  (this is the constructor.)
 function Money:new()
+
     -- Add member variables here.
     selfObj = {
         total_money = 50,
@@ -26,9 +27,6 @@ function Money:update()
         --print (self.total_money)
     end
 
-    if self.total_money <= 0 then
-        --print ("you've lost")
-    end
 end
 
 function Money:add_money_per_turn(a)
