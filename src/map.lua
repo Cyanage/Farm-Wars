@@ -134,7 +134,7 @@ end
 
 function Map.draw()
     drawMap()  -- Draws the map
-    --love.graphics.draw(barnImg, (1*scale_factor) + pos_centered.x, (3*scale_factor) + pos_centered.y, r, sx, sy, ox, oy, kx, ky)
+    love.graphics.draw(barnImg, (1*scale_factor) + pos_centered.x, (3*scale_factor) + pos_centered.y, r, sx, sy, ox, oy, kx, ky)
 end
 
 return Map

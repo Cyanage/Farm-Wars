@@ -17,6 +17,7 @@ function love.load()
     map = require "src/map"
     money = require "src/objects/money"
     ui = require "src/ui"
+    farmer = require "src/objects/farmer"
 
     font = love.graphics.newFont(64)
     love.graphics.setFont(font)
@@ -59,6 +60,10 @@ function love.load()
     -- Init modules
     menu.init()
     ui.init()
+
+    farmer:new(0)
+
+    farmer_time = os.time()
 end
 
 function initScreen()
@@ -94,6 +99,7 @@ function love.mousepressed(mouse_x, mouse_y, mouse_button)
     end
 end
 
+i = 1
 function love.draw()
     -- Check what scene is active.
     if menu.isActive() == true then
@@ -104,6 +110,8 @@ function love.draw()
 
     player_money:draw(player_font_x, font_y)
     enemy_money:draw(enemy_font_x, font_y)
+
+          farmer:draw(i)
 
   end
 
@@ -127,6 +135,20 @@ function love.update(dt)
     if enemy_money:get_current_money() < 0 and has_gone_down == false then
         enemy_font_x = enemy_font_x - 20
         has_gone_down = true
+    end
+
+    farmer_time = farmer_time + dt
+    if farmer_time >= 0.1 then
+
+      farmer:moveForwards(16)
+
+      if i >= 4 then
+        i = 1
+      else
+        i = i + 1
+      end
+
+      farmer_time = 0
     end
 
     -- Check what scene is active.
