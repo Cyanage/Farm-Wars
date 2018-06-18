@@ -117,8 +117,6 @@ function love.draw()
 
 function love.update(dt)
 
-  print (dt)
-
     if love.keyboard.isDown("a") then
       game.finish("Bill Cosby", "You")
     end
@@ -141,9 +139,11 @@ function love.update(dt)
     end
 
     farmer_time = farmer_time + dt
-    if farmer_time >= 0.2 then
+    if farmer_time >= 0.1 then
 
-      if i >= 2 then
+      farmer:moveForwards(16)
+
+      if i >= 4 then
         i = 1
       else
         i = i + 1
