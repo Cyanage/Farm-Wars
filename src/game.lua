@@ -58,7 +58,7 @@ function Game.draw()
 
     --displays that the winner has beaten the loser overtop of map and ui
     if gGameDone == true then
-      love.graphics.print(gResults.winner .. " has defeated " .. gResults.loser, gPosition.x, gPosition.y)
+        --love.graphics.print(gResults.winner .. " has defeated " .. gResults.loser, gPosition.x, gPosition.y)
     end
 end
 

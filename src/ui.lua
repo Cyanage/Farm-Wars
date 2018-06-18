@@ -8,9 +8,8 @@ menuPosition = LEFT
 local drawMenu = false
 local menuIsMinimized = false
 
--- load images
+-- load images here.
 function UI.init()
-
     red_turn_img = love.graphics.newImage("resc/images/red_turn_bar.png")
     blue_turn_img = love.graphics.newImage("resc/images/blue_turn_bar.png")
 
@@ -25,6 +24,9 @@ function UI.init()
     claim_tile_pressed_img = love.graphics.newImage("resc/images/claim_tile_pressed.png")
     claim_tile_unpressed_img = love.graphics.newImage("resc/images/claim_tile_unpressed.png")
 
+    improve_tile_pressed_img = love.graphics.newImage("resc/images/improve_tile_pressed.png")
+    improve_tile_unpressed_img = love.graphics.newImage("resc/images/improve_tile_unpressed.png")
+
 end
 
 buy_fence_is_pressed = false
@@ -38,6 +40,10 @@ end_turn_y = 0
 claim_tile_is_pressed = false
 claim_tile_x = 0
 claim_tile_y = 0
+
+improve_tile_is_pressed = false
+improve_tile_x = 0
+improve_tile_y = 0
 
 function UI.draw()
     local x_pos = pos_centered.x
@@ -69,7 +75,7 @@ function UI.draw()
 
         -- Calculate the position of the buy fence button.
         if menuPosition == LEFT then
-            buy_fence_x = menuPosX - 50*4*scale_factor
+            buy_fence_x = menuPosX - 51*4*scale_factor
             buy_fence_y = menuPosY + 6*4*scale_factor
         else
             buy_fence_x = menuPosX + 51*4*scale_factor
@@ -81,16 +87,15 @@ function UI.draw()
             love.graphics.draw(buy_fence_unpressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
         else
             love.graphics.draw(buy_fence_pressed_img, buy_fence_x, buy_fence_y, 0, scale_factor, scale_factor)
-
         end
 
         -- Calculate the position of the end turn button.
         if menuPosition == LEFT then
-            end_turn_x = menuPosX - 36*4*scale_factor
-            end_turn_y = menuPosY + 87*4*scale_factor
+            end_turn_x = menuPosX - 37*4*scale_factor
+            end_turn_y = menuPosY + 88*4*scale_factor
         else
             end_turn_x = menuPosX + 9*4*scale_factor
-            end_turn_y = menuPosY + 87*4*scale_factor
+            end_turn_y = menuPosY + 88*4*scale_factor
         end
 
         -- Draw the end turn button.
@@ -100,7 +105,7 @@ function UI.draw()
             love.graphics.draw(end_turn_pressed_img, end_turn_x, end_turn_y, 0, scale_factor, scale_factor)
         end
 
-        -- Calculate the position of the end turn button.
+        -- Calculate the position of the claim tile button.
         if menuPosition == LEFT then
             claim_tile_x = menuPosX - 93*4*scale_factor
             claim_tile_y = menuPosY + 6*4*scale_factor
@@ -109,11 +114,27 @@ function UI.draw()
             claim_tile_y = menuPosY + 6*4*scale_factor
         end
 
-        -- Draw the end turn button.
+        -- Draw the claim tile button.
         if claim_tile_is_pressed == false then
             love.graphics.draw(claim_tile_unpressed_img, claim_tile_x, claim_tile_y, 0, scale_factor, scale_factor)
         else
             love.graphics.draw(claim_tile_pressed_img, claim_tile_x, claim_tile_y, 0, scale_factor, scale_factor)
+        end
+
+        -- Calculate the position of the claim tile button.
+        if menuPosition == LEFT then
+            improve_tile_x = menuPosX - 93*4*scale_factor
+            improve_tile_y = menuPosY + 54*4*scale_factor
+        else
+            improve_tile_x = menuPosX + 9*4*scale_factor
+            improve_tile_y = menuPosY + 54*4*scale_factor
+        end
+
+        -- Draw the claim tile button.
+        if improve_tile_is_pressed == false then
+            love.graphics.draw(improve_tile_unpressed_img, improve_tile_x, improve_tile_y, 0, scale_factor, scale_factor)
+        else
+            love.graphics.draw(improve_tile_pressed_img, improve_tile_x, improve_tile_y, 0, scale_factor, scale_factor)
         end
     end
 end
