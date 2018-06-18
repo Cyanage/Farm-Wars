@@ -117,8 +117,6 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
                         print ("enemy bought a fence")
                     end
                 end
-
-
             end
         end
 
@@ -146,6 +144,16 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
 
     elseif mouse_x_pos > improve_tile_x and mouse_x_pos < improve_tile_x + improve_tile_width and mouse_y_pos > improve_tile_y and mouse_y_pos < improve_tile_y + improve_tile_height then
         print "improve_tile clicked up"
+        if map.isSelected(clickedTile.x+1, clickedTile.y+1) == true then
+            if TurnManager.currentPlayerTurn == RED and clickedTile.x < MAX_TILES.x/2 or TurnManager.currentPlayerTurn == BLUE and clickedTile.x >= MAX_TILES.x/2 then
+                print ("0", map.getTile(clickedTile.x+1, clickedTile.y+1))
+                if map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 5 or map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 0 or map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 1 or map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 2 then
+                    print "1"
+                    map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) +1 )
+                    game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+                end
+            end
+        end
 
     else
         print " no clicked button !!!!!!!!"

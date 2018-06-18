@@ -108,15 +108,14 @@ function love.draw()
   end
 
 function love.update(dt)
-
     if love.keyboard.isDown("a") then
-      game.finish("Bill Cosby", "You")
+        game.finish("Bill Cosby", "You")
     end
 
     if player_money:get_current_money() <= 0 then
-      game.finish("Team Blue", "Team Red")
+        game.finish("Team Blue", "Team Red")
     elseif  enemy_money:get_current_money() <= 0 then
-      game.finish("Team Red", "Team Blue")
+        game.finish("Team Red", "Team Blue")
     end
 
     if enemy_money:get_current_money() >= 100 and has_gone_up == false or enemy_money:get_current_money() <= -100 and has_gone_up == false then
@@ -125,7 +124,7 @@ function love.update(dt)
         print (tostring(has_gone_up))
     end
 
-    if enemy_money:get_current_money() < 0  and has_gone_down == false then
+    if enemy_money:get_current_money() < 0 and has_gone_down == false then
         enemy_font_x = enemy_font_x - 20
         has_gone_down = true
     end
