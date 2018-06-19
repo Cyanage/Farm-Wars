@@ -17,7 +17,7 @@ function love.load()
     map = require "src/map"
     money = require "src/objects/money"
     ui = require "src/ui"
-    farmer = require "src/objects/farmer"
+    --farmer = require "src/objects/farmer"
 
     font = love.graphics.newFont(64)
     love.graphics.setFont(font)
@@ -34,6 +34,8 @@ function love.load()
     has_gone_down = false
 
     turnManager = require "src/turnManager"
+
+    farmerList = {}
 
     -- Any initialization code goes after here:
     initScreen()  -- Initialize the tilemap and screen size.
@@ -60,8 +62,6 @@ function love.load()
     -- Init modules
     menu.init()
     ui.init()
-
-    farmer:new(0)
 
     farmer_time = os.time()
 end
@@ -99,8 +99,9 @@ function love.mousepressed(mouse_x, mouse_y, mouse_button)
     end
 end
 
-i = 1
 function love.draw()
+
+  farmerList = turnManager.farmers()
     -- Check what scene is active.
     if menu.isActive() == true then
         menu.draw()
@@ -111,11 +112,16 @@ function love.draw()
     player_money:draw(player_font_x, font_y)
     enemy_money:draw(enemy_font_x, font_y)
 
-          farmer:draw(i)
+    for i, farmer in ipairs(farmerList) do
+        farmer:draw()
+    end
 
   end
 
 function love.update(dt)
+
+    farmerList = turnManager.farmers()
+
     if love.keyboard.isDown("a") then
         game.finish("Bill Cosby", "You")
     end
@@ -137,18 +143,8 @@ function love.update(dt)
         has_gone_down = true
     end
 
-    farmer_time = farmer_time + dt
-    if farmer_time >= 0.1 then
-
-      farmer:moveForwards(16)
-
-      if i >= 4 then
-        i = 1
-      else
-        i = i + 1
-      end
-
-      farmer_time = 0
+    for i, farmer in ipairs(farmerList) do
+        farmer:update(dt)
     end
 
     -- Check what scene is active.
