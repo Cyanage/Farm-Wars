@@ -2,7 +2,6 @@ Money = {}
 
 -- This function makes a new instance of this object.  (this is the constructor.)
 function Money:new()
-
     -- Add member variables here.
     selfObj = {
         total_money = 50,
@@ -13,9 +12,7 @@ function Money:new()
 
     selfObj.time = os.time()
 
-    --print (selfObj.total_money)
-
-    -- Make this a class.
+    -- makes this a class.
     self.__index = self
     return setmetatable(selfObj, self)
 end
@@ -24,9 +21,7 @@ function Money:update()
     if os.time() - self.time >= 1 then
         self.total_money = self.total_money + self.money_per_turn
         self.time = os.time()
-        --print (self.total_money)
     end
-
 end
 
 function Money:add_money_per_turn(a)
