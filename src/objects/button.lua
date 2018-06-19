@@ -15,6 +15,7 @@ function Button:new(pos, size, text, func)
         _scale = 1
     }
 
+    -- owari!
     -- Init private variables here
 
     -- Make this a class.
