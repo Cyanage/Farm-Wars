@@ -106,33 +106,32 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
         if map.isSelected(clickedTile.x+1, clickedTile.y+1) == true then
             if map.isTileFence(clickedTile.x+1, clickedTile.y+1) == false then
                 if TurnManager.currentPlayerTurn == RED and clickedTile.x < MAX_TILES.x/2 or TurnManager.currentPlayerTurn == BLUE and clickedTile.x >= MAX_TILES.x/2 then
-                    game.setFence(clickedTile.x, clickedTile.y)  -- Add a fence to the current tile.
-                    game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+                    if player_money:get_current_money() >= 80 and TurnManager.currentPlayerTurn == RED then
+                        game.setFence(clickedTile.x, clickedTile.y)  -- Add a fence to the current tile.
+                        game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
 
-                    --money:add_money(-80)
+                        player_money:add_money(-80)
+                        player_money:add_money_per_turn(-10) --adds -5 money per turn
+                        print ("red player bought a fence")
 
-                    -- Finds out which player bought the fence
-                    if TurnManager.currentPlayerTurn == RED then
-                        player_money:add_money_per_turn(-5) --adds -5 money per turn
-                        print ("player bought quatuar defuar")
-                    elseif TurnManager.currentPlayerTurn == BLUE then
-                        enemy_money:add_money_per_turn(-5) --adds -5 money per turn
-                        print ("enemy bought a fence")
+                    elseif enemy_money:get_current_money() >= 80 and TurnManager.currentPlayerTurn == BLUE then
+                        game.setFence(clickedTile.x, clickedTile.y)  -- Add a fence to the current tile.
+                        game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+
+                        enemy_money:add_money(-80)
+                        enemy_money:add_money_per_turn(-10) --adds -5 money per turn
+                        print ("blue player bought a fence")
                     end
                 end
             end
         end
 
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
-        print "clicked end turn button"
-
-        game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
-
         -- Wait 1/4 of a second until the ending of the current turn.  (menu is also closed on turn end)
         endTurnWaitTime = 0.25
+        game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
 
     elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width or mouse_y_pos > claim_tile_y + claim_tile_empty_height) then
-        print "clicked claim tile button"
         if map.isSelected(clickedTile.x+1, clickedTile.y+1) == true then
             if map.isColour(RED, clickedTile.x+1, clickedTile.y+1) == false and map.isColour(BLUE, clickedTile.x+1, clickedTile.y+1) == false then
                 if TurnManager.currentPlayerTurn == RED and clickedTile.x < MAX_TILES.x/2 then
@@ -146,21 +145,40 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
         end
 
     elseif mouse_x_pos > improve_tile_x and mouse_x_pos < improve_tile_x + improve_tile_width and mouse_y_pos > improve_tile_y and mouse_y_pos < improve_tile_y + improve_tile_height then
-        print "improve_tile clicked up"
         if map.isSelected(clickedTile.x+1, clickedTile.y+1) == true then
             if TurnManager.currentPlayerTurn == RED and clickedTile.x < MAX_TILES.x/2 or TurnManager.currentPlayerTurn == BLUE and clickedTile.x >= MAX_TILES.x/2 then
-                print ("0", map.getTile(clickedTile.x+1, clickedTile.y+1))
-                if map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 5 or map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 0 or map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 1 or map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 2 then
-                    print "1"
-                    map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) +1 )
+                if map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 5 and player_money:get_current_money() >= 60 and TurnManager.currentPlayerTurn == RED then
+                    map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) + 1 )
                     game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+                    player_money:add_money(-60)  -- Subtracts money by 60.
+                    player_money:add_money_per_turn(20) -- adds +20 money per turn
+                    print ("red player improved a tree")
+
+                elseif map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 >= 0 and map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 < 3 and player_money:get_current_money() >= 20 and TurnManager.currentPlayerTurn == RED then
+                    map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) + 1 )
+                    game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+                    player_money:add_money(-20)  -- Subtracts money by 60.
+                    player_money:add_money_per_turn(5) -- adds +20 money per turn
+                    print ("red player improved a wheat tile.")
+
+                elseif map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 5 and enemy_money:get_current_money() >= 60 and TurnManager.currentPlayerTurn == BLUE then
+                    map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) + 1 )
+                    game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+                    enemy_money:add_money(-60)  -- Subtracts money by 60.
+                    enemy_money:add_money_per_turn(20) -- adds +20 money per turn
+                    print ("blue player improved a tree")
+
+                elseif map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 >= 0 and map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 < 3 and enemy_money:get_current_money() >= 20 and TurnManager.currentPlayerTurn == BLUE then
+                    map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) + 1 )
+                    game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
+                    enemy_money:add_money(-20)  -- Subtracts money by 60.
+                    enemy_money:add_money_per_turn(5) -- adds +20 money per turn
+                    print ("blue player improved a wheat tile.")
                 end
             end
         end
-
     else
-        print " no clicked button !!!!!!!!"
-        --something
+        print "no button on click up"
     end
 end
 
@@ -180,23 +198,13 @@ local function _checkButtonDownActions(mouse_x_pos, mouse_y_pos)
 
     -- Check if the mouse is over the button.
     if mouse_x_pos > buy_fence_x and mouse_x_pos < buy_fence_x + buy_fence_width and mouse_y_pos > buy_fence_y and mouse_y_pos < buy_fence_y + buy_fence_height then
-        print "clicked fence button down"
         buy_fence_is_pressed = true  -- Change the button image to being pressed.
-
     elseif mouse_x_pos > end_turn_x and mouse_x_pos < end_turn_x + end_turn_width and mouse_y_pos > end_turn_y and mouse_y_pos < end_turn_y + end_turn_height then
-        print "clicked end turn button down"
         end_turn_is_pressed = true  -- Change the button image to being pressed.
-
     elseif (mouse_x_pos > claim_tile_x and mouse_x_pos < claim_tile_x + claim_tile_width and mouse_y_pos > claim_tile_y and mouse_y_pos < claim_tile_y + claim_tile_height) and (mouse_x_pos > claim_tile_x + claim_tile_empty_width or mouse_y_pos > claim_tile_y + claim_tile_empty_height) then
-        print "clicked claim tile button down"
         claim_tile_is_pressed = true
-
     elseif mouse_x_pos > improve_tile_x and mouse_x_pos < improve_tile_x + improve_tile_width and mouse_y_pos > improve_tile_y and mouse_y_pos < improve_tile_y + improve_tile_height then
-        print "clicked improve_tile button down"
         improve_tile_is_pressed = true  -- Change the button image to being pressed.
-
-    else
-        --print "no clicked button down !!!!!!!!"
     end
 end
 
