@@ -3,6 +3,8 @@ Farmer = {}
 -- This function makes a new instance of this object.  (this is the constructor.)
 function Farmer:new(pos_x, pos_y)
 
+    self.map = require "src/map"
+
     self.farmer_sprites = {love.graphics.newImage("resc/images/farmer/farmer1.png"),
     love.graphics.newImage("resc/images/farmer/farmer3.png"),
     love.graphics.newImage("resc/images/farmer/farmer1.png"),
@@ -44,6 +46,12 @@ end
 function Farmer:moveForwards(pixels)
 
   self.pos_x = self.pos_x + pixels
+
+  --if self.map.getTile(self.pos_x, self.pos_y) % 10 == 1 then
+    --print ('found wheat')
+  --elseif self.map.isTileFence(self.pos_x, self.pos_y) then
+    --print ('stuff')
+  --end
 end
 
 function Farmer:draw()
