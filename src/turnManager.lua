@@ -8,6 +8,7 @@ TurnManager.currentAction = 0
 TurnManager.currentPlayerTurn = RED
 
 money = require "src/objects/money"  -- So that money can go up each turn
+farmer = require "src/objects/farmer"
 
 player_money = money:new()
 enemy_money = money:new()
@@ -22,6 +23,8 @@ local mouseUp = false
 local mouseDownAction = false
 
 local clickedTile = {x=0, y=0}
+
+local farmerList = {} -- Add farmer:new(pos_x, pos_y) to the table to add a farmer into game
 
 function TurnManager.load()
     --TurnManager.inSetup = true
@@ -273,6 +276,10 @@ function TurnManager.update(dt)
             end
         end
     end
+end
+
+function TurnManager.farmers()
+  return farmerList
 end
 
 return TurnManager
