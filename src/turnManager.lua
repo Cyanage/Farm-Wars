@@ -158,7 +158,7 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
                     map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) + 1 )
                     game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
                     player_money:add_money(-20)  -- Subtracts money by 60.
-                    player_money:add_money_per_turn(5) -- adds +20 money per turn
+                    player_money:add_money_per_turn(6) -- adds +20 money per turn
                     print ("red player improved a wheat tile.")
 
                 elseif map.getTile(clickedTile.x+1, clickedTile.y+1) % 10 == 5 and enemy_money:get_current_money() >= 60 and TurnManager.currentPlayerTurn == BLUE then
@@ -172,7 +172,7 @@ local function _checkButtonUpActions(mouse_x_pos, mouse_y_pos)
                     map.setTile( clickedTile.x+1, clickedTile.y+1, map.getTile(clickedTile.x+1, clickedTile.y+1) + 1 )
                     game.setSelectedTile(clickedTile.x, clickedTile.y, false)  -- Make the active tile unselected again.
                     enemy_money:add_money(-20)  -- Subtracts money by 60.
-                    enemy_money:add_money_per_turn(5) -- adds +20 money per turn
+                    enemy_money:add_money_per_turn(6) -- adds +20 money per turn
                     print ("blue player improved a wheat tile.")
                 end
             end
@@ -279,7 +279,7 @@ function TurnManager.update(dt)
 end
 
 function TurnManager.farmers()
-  return farmerList
+    return farmerList
 end
 
 return TurnManager
